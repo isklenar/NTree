@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTree", "NTree\NTree.csproj", "{B8891DB6-8B10-4684-98C5-697BFBD81EA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTree.Test", "UnitTestProject1\NTree.Test.csproj", "{7ABAE572-38D3-4E0D-853D-4D2AB34157E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTree.Test", "NTree.Test\NTree.Test.csproj", "{7ABAE572-38D3-4E0D-853D-4D2AB34157E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
