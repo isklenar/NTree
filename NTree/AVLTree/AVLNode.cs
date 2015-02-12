@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using NTree.Common;
 
-namespace NTree.BinarySearchTree
+namespace NTree.AVLTree
 {
-    public class BSTNode<T>: TreeNode<T> where T : IComparable
+    class AVLNode<T> : TreeNode<T> where T : IComparable
     {
-        public BSTNode(IComparable item) : base(item)
+        public AVLNode(IComparable item) : base(item)
         {
         }
+
+        public int Height { get; set; }
     }
 }

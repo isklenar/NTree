@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using NTree.Common;
@@ -8,15 +9,10 @@ using NTree.Common;
 namespace NTree.BinarySearchTree
 {
     public class BinarySearchTree<T> : BinaryTree<T> where T : IComparable
-    {
-        private int _count;
-        protected bool ReadOnly;
-
-        private BSTNode<T> _root; 
-        
+    {        
         public override IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return new BSTInOrderEnumerator<T>(_root);
         }
 
         public override void Add(T item)
@@ -25,7 +21,7 @@ namespace NTree.BinarySearchTree
             {
                 throw new NotSupportedException("Tree is read only");
             }
-            BSTNode<T> currentNode = _root;
+            var currentNode = _root;
             if (_root == null)
             {
                 _root = new BSTNode<T>(item);
@@ -33,7 +29,7 @@ namespace NTree.BinarySearchTree
                 return;
             }
 
-            BSTNode<T> prevNode = currentNode;
+            var prevNode = currentNode;
             bool left = false;
             while (currentNode != null)
             {
@@ -42,13 +38,13 @@ namespace NTree.BinarySearchTree
                 int comparison = item.CompareTo(currentNode.Element);
                 if (comparison >= 0)
                 {
-                    currentNode = currentNode.Right;
+                    currentNode = (BSTNode<T>) currentNode.Right;
                     left = false;
                 }
 
                 if (comparison < 0)
                 {
-                    currentNode = currentNode.Left;
+                    currentNode = (BSTNode<T>) currentNode.Left;
                     left = true;
                 }
                 
@@ -80,23 +76,13 @@ namespace NTree.BinarySearchTree
             _count = 0;
         }
 
-        public override bool Contains(T item)
-        {
-            return FindElement(item) != null;
-        }
-
-        public override void CopyTo(T[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
         public override bool Remove(T item)
         {
             if (ReadOnly)
             {
                 throw new NotSupportedException("Tree is read only");
             }
-            var nodeToRemove = FindElement(item);
+            BSTNode<T> nodeToRemove = (BSTNode<T>) FindElement(item);
             if (nodeToRemove == null)
             {
                 //not found, can't remove
@@ -121,42 +107,7 @@ namespace NTree.BinarySearchTree
             return true;
         }
 
-        public override int Count
-        {
-            get { return _count; }
-        }
-
-        public override bool IsReadOnly
-        {
-            get { return ReadOnly; }
-        }
-
-        private BSTNode<T> FindElement(T item)
-        {
-            BSTNode<T> currentNode = _root;
-
-            while (currentNode != null)
-            {
-                int comparison = item.CompareTo(currentNode.Element);
-                if (comparison == 0)
-                {
-                    return currentNode;
-                }
-                if (comparison > 0)
-                {
-                    currentNode = currentNode.Right;
-                }
-
-                if (comparison < 0)
-                {
-                    currentNode = currentNode.Left;
-                }
-
-            }
-
-            return null;
-        }
-
+        
         /// <summary>
         /// Removes a node that has no children
         /// </summary>
@@ -196,7 +147,7 @@ namespace NTree.BinarySearchTree
                 if (parent == null)
                 {
                     leftChild.Parent = null;
-                    _root = leftChild;
+                    _root = (BSTNode<T>) leftChild;
                     return;
                 }
                 
@@ -212,7 +163,7 @@ namespace NTree.BinarySearchTree
                 if (parent == null)
                 {
                     rightChild.Parent = null;
-                    _root = rightChild;
+                    _root = (BSTNode<T>) rightChild;
                     return;
                 }
 
@@ -262,22 +213,5 @@ namespace NTree.BinarySearchTree
             }
         }
 
-        /// <summary>
-        /// Finds min value in subtree.
-        /// 
-        /// From BST definition, min node is the left most node
-        /// </summary>
-        /// <param name="subTreeNode">sub tree root</param>
-        /// <returns>node with min value</returns>
-        private BSTNode<T> FindMinInSubtree(BSTNode<T> subTreeNode)
-        {
-            var currentNode = subTreeNode;
-            while (currentNode.Left != null)
-            {
-                currentNode = currentNode.Left;
-            }
-
-            return currentNode;
-        } 
     }
 }

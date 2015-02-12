@@ -53,8 +53,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BinarySearchTree\BinarySearchTreeCustomObjectTest.cs" />
-    <Compile Include="BinarySearchTree\BinarySearchTreePrimitivesTest.cs" />
+    <Compile Include="BinarySearchTree\AVLTreeTest.cs" />
+    <Compile Include="BinarySearchTree\BinarySearchTreeTest.cs" />
+    <Compile Include="BinarySearchTree\BinaryTreeTestBase.cs" />
     <Compile Include="BinarySearchTree\TestElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
