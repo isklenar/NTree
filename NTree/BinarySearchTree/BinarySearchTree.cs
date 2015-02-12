@@ -10,7 +10,8 @@ namespace NTree.BinarySearchTree
     public class BinarySearchTree<T> : BinaryTree<T> where T : IComparable
     {
         private int _count;
-        private bool _readOnly;
+        protected bool ReadOnly;
+
         private BSTNode<T> _root; 
         
         public override IEnumerator<T> GetEnumerator()
@@ -20,7 +21,7 @@ namespace NTree.BinarySearchTree
 
         public override void Add(T item)
         {
-            if (_readOnly)
+            if (ReadOnly)
             {
                 throw new NotSupportedException("Tree is read only");
             }
@@ -71,7 +72,7 @@ namespace NTree.BinarySearchTree
 
         public override void Clear()
         {
-            if (_readOnly)
+            if (ReadOnly)
             {
                 throw new NotSupportedException("Tree is read only");
             }
@@ -91,7 +92,7 @@ namespace NTree.BinarySearchTree
 
         public override bool Remove(T item)
         {
-            if (_readOnly)
+            if (ReadOnly)
             {
                 throw new NotSupportedException("Tree is read only");
             }
@@ -106,14 +107,16 @@ namespace NTree.BinarySearchTree
             {
                 RemoveChildlessNode(nodeToRemove);
             }
-
-            //XOR - has one child
-            if (nodeToRemove.Left == null ^ nodeToRemove.Right == null)
+            else if (nodeToRemove.Left == null ^ nodeToRemove.Right == null) // has one child
             {
                 RemoveOneChildNode(nodeToRemove);
             }
+            else //has both children
+            {
+                RemoveTwoChildrenNode(nodeToRemove);
+            }
 
-            RemoveNode(nodeToRemove);
+            
             _count--;
             return true;
         }
@@ -125,7 +128,7 @@ namespace NTree.BinarySearchTree
 
         public override bool IsReadOnly
         {
-            get { return _readOnly; }
+            get { return ReadOnly; }
         }
 
         private BSTNode<T> FindElement(T item)
@@ -223,14 +226,39 @@ namespace NTree.BinarySearchTree
         /// Removes node with two children
         /// </summary>
         /// <param name="node">node to remove</param>
-        private void RemoveNode(BSTNode<T> node)
+        private void RemoveTwoChildrenNode(BSTNode<T> node)
         {
-            //find min node in right subtree, which will be replacement for current one;
+            //find min node in right subtree, which will be replacement for current one
             var replacement = FindMinInSubtree(node.Right);
 
-            if (replacement.Right == null)
+            //replacement is right child of node we are removing
+            //since it's min value, it only has right child
+            //with elements larger than itself
+            if (replacement.Parent.Element.CompareTo(node.Element) == 0)
             {
-                replacement.Parent.Left = null;
+                //just "push" replacement one layer up
+                node.Element = replacement.Element;
+                node.Right = replacement.Right;
+                if (replacement.Right != null)
+                {
+                    replacement.Right.Parent = node;
+                }
+            }
+            else
+            // replacement is nested deeper, there is atleast one ndoe between replacement and node, i.e. replacement.Parent != node
+            {
+                node.Element = replacement.Element;
+                if (replacement.Left == null && replacement.Right == null)
+                {
+                    //replacement is min node, has to be left child
+                    replacement.Parent.Left = null;
+                }
+                else //can only have right child
+                {
+                    //add right child as a left child of parent
+                    replacement.Parent.Left = replacement.Right;
+                    replacement.Right.Parent = replacement.Parent;
+                }
             }
         }
 
@@ -239,8 +267,8 @@ namespace NTree.BinarySearchTree
         /// 
         /// From BST definition, min node is the left most node
         /// </summary>
-        /// <param name="subTreeNode"></param>
-        /// <returns></returns>
+        /// <param name="subTreeNode">sub tree root</param>
+        /// <returns>node with min value</returns>
         private BSTNode<T> FindMinInSubtree(BSTNode<T> subTreeNode)
         {
             var currentNode = subTreeNode;

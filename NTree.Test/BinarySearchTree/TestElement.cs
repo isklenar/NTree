@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NTree.Test.BinarySearchTree
 {
-    class TestElement : IComparable
+    public class TestElement : IComparable
     {
         public TestElement(int id)
         {

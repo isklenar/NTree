@@ -63,7 +63,7 @@ namespace NTree.Test.BinarySearchTree
             Assert.IsTrue(_tree.Contains(new TestElement(4)));
             Assert.IsTrue(_tree.Contains(new TestElement(2)));
             Assert.IsTrue(_tree.Contains(new TestElement(3)));
-            Assert.IsTrue(_tree.Contains(new TestElement(6)));
+            Assert.IsTrue(_tree.Contains(new TestElement(5)));
             Assert.IsTrue(_tree.Contains(new TestElement(6)));
             Assert.IsTrue(_tree.Contains(new TestElement(100)));
 
@@ -117,6 +117,105 @@ namespace NTree.Test.BinarySearchTree
             _tree.Clear();
             Assert.AreEqual(0, _tree.Count);
             Assert.IsFalse(_tree.Contains(new TestElement(1)));
+        }
+
+        /*
+         *     2
+         *   /   \
+         *  1      4 <----
+         *        /  \
+         *       3    8
+         *          / \
+         *         6  100
+         *          \
+         *           7
+         **/
+
+        [Test]
+        public void RemoveElementWithTwoChildrenTest()
+        {
+            _tree.Add(new TestElement(2));
+            _tree.Add(new TestElement(4));
+            _tree.Add(new TestElement(1));
+            _tree.Add(new TestElement(8));
+            _tree.Add(new TestElement(6));
+            _tree.Add(new TestElement(7));
+            _tree.Add(new TestElement(3));
+            _tree.Add(new TestElement(100));
+
+            _tree.Remove(new TestElement(4));
+            Assert.IsFalse(_tree.Contains(new TestElement(4)));
+            Assert.IsTrue(_tree.Contains(new TestElement(2)));
+            Assert.IsTrue(_tree.Contains(new TestElement(1)));
+            Assert.IsTrue(_tree.Contains(new TestElement(7)));
+            Assert.IsTrue(_tree.Contains(new TestElement(8)));
+            Assert.IsTrue(_tree.Contains(new TestElement(100)));
+        }
+
+        /*
+         *     2
+         *   /   \
+         *  1      4
+         *        /  \
+         *       3    8
+         *          / \
+         *   --->  6  100
+         *          \
+         *           7
+         **/
+
+        [Test]
+        public void RemoveElementWithOneChildTest()
+        {
+            _tree.Add(new TestElement(2));
+            _tree.Add(new TestElement(4));
+            _tree.Add(new TestElement(1));
+            _tree.Add(new TestElement(8));
+            _tree.Add(new TestElement(6));
+            _tree.Add(new TestElement(7));
+            _tree.Add(new TestElement(3));
+            _tree.Add(new TestElement(100));
+
+            _tree.Remove(new TestElement(6));
+            Assert.IsFalse(_tree.Contains(new TestElement(6)));
+            Assert.IsTrue(_tree.Contains(new TestElement(2)));
+            Assert.IsTrue(_tree.Contains(new TestElement(1)));
+            Assert.IsTrue(_tree.Contains(new TestElement(7)));
+            Assert.IsTrue(_tree.Contains(new TestElement(8)));
+            Assert.IsTrue(_tree.Contains(new TestElement(100)));
+        }
+
+        /*
+        *     2
+        *   /   \
+        *  1      4
+        *        /  \
+        *       3    8
+        *          / \
+        *   --->  6  100
+        *          \
+        *           7
+        **/
+
+        [Test]
+        public void RemoveElementRootTest()
+        {
+            _tree.Add(new TestElement(2));
+            _tree.Add(new TestElement(4));
+            _tree.Add(new TestElement(1));
+            _tree.Add(new TestElement(8));
+            _tree.Add(new TestElement(6));
+            _tree.Add(new TestElement(7));
+            _tree.Add(new TestElement(3));
+            _tree.Add(new TestElement(100));
+
+            _tree.Remove(new TestElement(2));
+            Assert.IsFalse(_tree.Contains(new TestElement(2)));
+            Assert.IsTrue(_tree.Contains(new TestElement(6)));
+            Assert.IsTrue(_tree.Contains(new TestElement(1)));
+            Assert.IsTrue(_tree.Contains(new TestElement(7)));
+            Assert.IsTrue(_tree.Contains(new TestElement(8)));
+            Assert.IsTrue(_tree.Contains(new TestElement(100)));
         }
     }
 }
