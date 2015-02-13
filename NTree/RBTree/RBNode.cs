@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NTree.Common;
 
 namespace NTree.RBTree
@@ -11,6 +7,15 @@ namespace NTree.RBTree
     {
         public RBNode(IComparable item) : base(item)
         {
+            Colour = RBColour.Red;
         }
+
+        public RBColour Colour { get; set; }
+    }
+
+    public enum RBColour
+    {
+        Red,
+        Black
     }
 }

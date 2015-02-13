@@ -87,7 +87,7 @@ namespace NTree.Test.BinarySearchTree
 
         }
 
-        [Test]
+       /* [Test]
         public void ClearTreeTest()
         {
             int n = 100;
@@ -108,7 +108,7 @@ namespace NTree.Test.BinarySearchTree
             _tree.Clear();
             Assert.AreEqual(0, _tree.Count);
             Assert.IsFalse(_tree.Contains(new TestElement(1)));
-        }
+        }*/
 
         /*
          *     2

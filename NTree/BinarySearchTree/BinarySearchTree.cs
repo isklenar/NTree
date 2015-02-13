@@ -9,14 +9,14 @@ using NTree.Common;
 namespace NTree.BinarySearchTree
 {
     public class BinarySearchTree<T> : BinaryTree<T> where T : IComparable
-    {        
+    {
         public override void Add(T item)
         {
             if (ReadOnly)
             {
                 throw new NotSupportedException("Tree is read only");
             }
-            var currentNode = Root;
+
             if (Root == null)
             {
                 Root = new BSTNode<T>(item);
@@ -24,11 +24,13 @@ namespace NTree.BinarySearchTree
                 return;
             }
 
-            var prevNode = currentNode;
+            var currentNode = Root;
+            BSTNode<T> prevNode = null;
             bool left = false;
+
             while (currentNode != null)
             {
-                prevNode = currentNode;
+                prevNode = (BSTNode<T>)currentNode;
 
                 int comparison = item.CompareTo(currentNode.Element);
                 if (comparison == 0) //element exists
@@ -37,32 +39,31 @@ namespace NTree.BinarySearchTree
                 }
                 if (comparison > 0)
                 {
-                    currentNode = (BSTNode<T>) currentNode.Right;
+                    currentNode = (BSTNode<T>)currentNode.Right;
                     left = false;
                 }
 
                 if (comparison < 0)
                 {
-                    currentNode = (BSTNode<T>) currentNode.Left;
+                    currentNode = (BSTNode<T>)currentNode.Left;
                     left = true;
                 }
-                
+
             }
 
-            currentNode = new BSTNode<T>(item) {Parent = prevNode};
+            //currentNode is null at this point
+            currentNode = new BSTNode<T>(item) { Parent = prevNode };
             _count++;
-            //currentNode is root -> does not have parent
-            if (prevNode != null)
+
+            if (left)
             {
-                if (left)
-                {
-                    prevNode.Left = currentNode;
-                }
-                else
-                {
-                    prevNode.Right = currentNode;
-                }
-            }            
+                prevNode.Left = currentNode;
+            }
+            else
+            {
+                prevNode.Right = currentNode;
+            }
+
         }
 
         public override bool Remove(T item)
@@ -71,7 +72,7 @@ namespace NTree.BinarySearchTree
             {
                 throw new NotSupportedException("Tree is read only");
             }
-            BSTNode<T> nodeToRemove = (BSTNode<T>) FindElement(item);
+            BSTNode<T> nodeToRemove = (BSTNode<T>)FindElement(item);
             if (nodeToRemove == null)
             {
                 //not found, can't remove
@@ -91,12 +92,12 @@ namespace NTree.BinarySearchTree
                 RemoveTwoChildrenNode(nodeToRemove);
             }
 
-            
+
             _count--;
             return true;
         }
 
-        
+
         /// <summary>
         /// Removes a node that has no children
         /// </summary>
@@ -111,7 +112,7 @@ namespace NTree.BinarySearchTree
                 Root = null;
                 return;
             }
-            
+
             //removing left child
             if (parent.Left != null && parent.Left.Element.CompareTo(node.Element) == 0)
             {
@@ -137,20 +138,20 @@ namespace NTree.BinarySearchTree
                 if (parent == null)
                 {
                     child.Parent = null;
-                    Root = (BSTNode<T>) child;
+                    Root = (BSTNode<T>)child;
                     return;
                 }
 
                 if (ReferenceEquals(parent.Left, node)) //node is left child of parent
                 {
                     parent.Left = child;
-                    child.Parent = parent; 
+                    child.Parent = parent;
                 }
                 else
                 {
                     parent.Right = child;
-                    child.Parent = parent; 
-                }           
+                    child.Parent = parent;
+                }
             }
             else
             {
@@ -160,7 +161,7 @@ namespace NTree.BinarySearchTree
                 if (parent == null)
                 {
                     child.Parent = null;
-                    Root = (BSTNode<T>) child;
+                    Root = (BSTNode<T>)child;
                     return;
                 }
 
@@ -173,7 +174,7 @@ namespace NTree.BinarySearchTree
                 {
                     parent.Right = child;
                     child.Parent = parent;
-                } 
+                }
             }
         }
 
