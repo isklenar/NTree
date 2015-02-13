@@ -8,7 +8,7 @@ namespace NTree.Common
 {
     public abstract class BinaryTree<T> : ICollection<T> where T : IComparable
     {
-        protected TreeNode<T> _root;
+        protected TreeNode<T> Root;
         protected int _count;
         protected bool ReadOnly;
 
@@ -16,7 +16,10 @@ namespace NTree.Common
         /// Return in-order enumerator
         /// </summary>
         /// <returns>in order IEnumerator</returns>
-        public abstract IEnumerator<T> GetEnumerator();
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new BSTInOrderEnumerator<T>(Root);
+        }
 
         /// <summary>
         /// Return in-order enumerator
@@ -28,7 +31,16 @@ namespace NTree.Common
         }
 
         public abstract void Add(T item);
-        public abstract void Clear();
+
+        public void Clear()
+        {
+            if (ReadOnly)
+            {
+                throw new NotSupportedException("Tree is read only");
+            }
+            Root = null;
+            _count = 0;
+        }
 
         public bool Contains(T item)
         {
@@ -58,7 +70,7 @@ namespace NTree.Common
 
         protected TreeNode<T> FindElement(T item)
         {
-            TreeNode<T> currentNode = _root;
+            TreeNode<T> currentNode = Root;
 
             while (currentNode != null)
             {
@@ -98,6 +110,7 @@ namespace NTree.Common
             }
 
             return currentNode;
-        } 
+        }
+
     }
 }

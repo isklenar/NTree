@@ -10,21 +10,16 @@ namespace NTree.BinarySearchTree
 {
     public class BinarySearchTree<T> : BinaryTree<T> where T : IComparable
     {        
-        public override IEnumerator<T> GetEnumerator()
-        {
-            return new BSTInOrderEnumerator<T>(_root);
-        }
-
         public override void Add(T item)
         {
             if (ReadOnly)
             {
                 throw new NotSupportedException("Tree is read only");
             }
-            var currentNode = _root;
-            if (_root == null)
+            var currentNode = Root;
+            if (Root == null)
             {
-                _root = new BSTNode<T>(item);
+                Root = new BSTNode<T>(item);
                 _count++;
                 return;
             }
@@ -36,7 +31,11 @@ namespace NTree.BinarySearchTree
                 prevNode = currentNode;
 
                 int comparison = item.CompareTo(currentNode.Element);
-                if (comparison >= 0)
+                if (comparison == 0) //element exists
+                {
+                    return;
+                }
+                if (comparison > 0)
                 {
                     currentNode = (BSTNode<T>) currentNode.Right;
                     left = false;
@@ -64,16 +63,6 @@ namespace NTree.BinarySearchTree
                     prevNode.Right = currentNode;
                 }
             }            
-        }
-
-        public override void Clear()
-        {
-            if (ReadOnly)
-            {
-                throw new NotSupportedException("Tree is read only");
-            }
-            _root = null;
-            _count = 0;
         }
 
         public override bool Remove(T item)
@@ -119,15 +108,16 @@ namespace NTree.BinarySearchTree
             //we're removing root
             if (parent == null)
             {
-                _root = null;
+                Root = null;
                 return;
             }
-
-            if (parent.Left.Element.CompareTo(node.Element) == 0)
+            
+            //removing left child
+            if (parent.Left != null && parent.Left.Element.CompareTo(node.Element) == 0)
             {
                 parent.Left = null;
             }
-            else
+            else //it's a right child
             {
                 parent.Right = null;
             }
@@ -138,38 +128,52 @@ namespace NTree.BinarySearchTree
         /// <param name="nodeToRemove">node to remove</param>
         private void RemoveOneChildNode(BSTNode<T> node)
         {
-            var leftChild = node.Left;
-            if (leftChild != null)
+            var child = node.Left;
+            if (child != null) //only child is left one
             {
                 var parent = node.Parent;
 
                 //root
                 if (parent == null)
                 {
-                    leftChild.Parent = null;
-                    _root = (BSTNode<T>) leftChild;
+                    child.Parent = null;
+                    Root = (BSTNode<T>) child;
                     return;
                 }
-                
-                //otherwise move child
-                parent.Left = leftChild;
-                leftChild.Parent = parent;               
+
+                if (ReferenceEquals(parent.Left, node)) //node is left child of parent
+                {
+                    parent.Left = child;
+                    child.Parent = parent; 
+                }
+                else
+                {
+                    parent.Right = child;
+                    child.Parent = parent; 
+                }           
             }
             else
             {
-                var rightChild = node.Right;
+                child = node.Right;
                 var parent = node.Parent;
                 //root
                 if (parent == null)
                 {
-                    rightChild.Parent = null;
-                    _root = (BSTNode<T>) rightChild;
+                    child.Parent = null;
+                    Root = (BSTNode<T>) child;
                     return;
                 }
 
-                //otherwise move child
-                parent.Left = rightChild;
-                rightChild.Parent = parent;
+                if (ReferenceEquals(parent.Left, node)) //node is left child of parent
+                {
+                    parent.Left = child;
+                    child.Parent = parent;
+                }
+                else
+                {
+                    parent.Right = child;
+                    child.Parent = parent;
+                } 
             }
         }
 

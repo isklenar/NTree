@@ -11,7 +11,7 @@ namespace NTree.Test.BinarySearchTree
 {
     public abstract class BinaryTreeTestBase{
 
-        protected BinaryTree<TestElement> _tree;
+        protected ICollection<TestElement> _tree;
 
         [Test]
         public void InsertAndContainsTest1Element()
@@ -70,26 +70,21 @@ namespace NTree.Test.BinarySearchTree
         public void InsertAndContainsLargeScale([Range (0,500000,100000)] int n)
         {
             Random random = new Random();
-            int[] numbers = new int[n];
+            TestElement[] numbers = new TestElement[n];
 
             for (int i = 0; i < n; i++)
             {
-                numbers[i] = random.Next();
+                numbers[i] = new TestElement(random.Next());
+                _tree.Add(numbers[i]);
             }
-           
-            for (int i = 0; i < n; i++)
+
+            List<TestElement> list = numbers.OrderBy(u => u.Id).Distinct().ToList();
+
+            foreach (var item in list)
             {
-                _tree.Add(new TestElement(numbers[i]));
+                Assert.IsTrue(_tree.Contains(item));
             }
 
-            int[] permutation = numbers.OrderBy(x => random.Next()).ToArray();
-
-            for (int i = 0; i < n; i++)
-            {
-                Assert.IsTrue(_tree.Contains(new TestElement(permutation[i])));
-            }
-
-            Assert.AreEqual(n, _tree.Count);
         }
 
         [Test]
@@ -124,6 +119,40 @@ namespace NTree.Test.BinarySearchTree
          *          / \
          *         6  100
          *          \
+         *            7
+         **/
+        [Test]
+        public void InsertAndRemoveDuplicateElement()
+        {
+            _tree.Add(new TestElement(2));
+            _tree.Add(new TestElement(4));
+            _tree.Add(new TestElement(1));
+            _tree.Add(new TestElement(8));
+            _tree.Add(new TestElement(6));
+            _tree.Add(new TestElement(7));
+            _tree.Add(new TestElement(3));
+            _tree.Add(new TestElement(100));
+            _tree.Add(new TestElement(4)); //duplicate
+
+            _tree.Remove(new TestElement(4));
+            Assert.IsFalse(_tree.Contains(new TestElement(4)));
+            Assert.IsTrue(_tree.Contains(new TestElement(2)));
+            Assert.IsTrue(_tree.Contains(new TestElement(1)));
+            Assert.IsTrue(_tree.Contains(new TestElement(7)));
+            Assert.IsTrue(_tree.Contains(new TestElement(8)));
+            Assert.IsTrue(_tree.Contains(new TestElement(100)));
+            Assert.AreEqual(7, _tree.Count);
+        }
+
+        /*
+         *     2
+         *   /   \
+         *  1      4 <----
+         *        /  \
+         *       3    8
+         *          / \
+         *         6  100
+         *          \
          *           7
          **/
 
@@ -146,6 +175,7 @@ namespace NTree.Test.BinarySearchTree
             Assert.IsTrue(_tree.Contains(new TestElement(7)));
             Assert.IsTrue(_tree.Contains(new TestElement(8)));
             Assert.IsTrue(_tree.Contains(new TestElement(100)));
+            Assert.AreEqual(7, _tree.Count);
         }
 
         /*
@@ -179,6 +209,7 @@ namespace NTree.Test.BinarySearchTree
             Assert.IsTrue(_tree.Contains(new TestElement(7)));
             Assert.IsTrue(_tree.Contains(new TestElement(8)));
             Assert.IsTrue(_tree.Contains(new TestElement(100)));
+            Assert.AreEqual(7, _tree.Count);
         }
 
         /*
@@ -213,6 +244,66 @@ namespace NTree.Test.BinarySearchTree
             Assert.IsTrue(_tree.Contains(new TestElement(8)));
             Assert.IsTrue(_tree.Contains(new TestElement(100)));
             Assert.IsTrue(_tree.Contains(new TestElement(3)));
+            Assert.AreEqual(7, _tree.Count);
+        }
+
+
+        /*
+        *     2 <---
+        *   /   \
+        *  1      4 <---
+        *        /  \
+        *       3    8
+        *          / \
+        *         6  100 <---
+        *          \
+        *           7 <---
+        **/
+        [Test]
+        public void RemoveMultipleElementsTest()
+        {
+            _tree.Add(new TestElement(2));
+            _tree.Add(new TestElement(4));
+            _tree.Add(new TestElement(1));
+            _tree.Add(new TestElement(8));
+            _tree.Add(new TestElement(6));
+            _tree.Add(new TestElement(7));
+            _tree.Add(new TestElement(3));
+            _tree.Add(new TestElement(100));
+
+            _tree.Remove(new TestElement(2));
+            _tree.Remove(new TestElement(4));
+            _tree.Remove(new TestElement(100));
+            _tree.Remove(new TestElement(7));
+            
+            Assert.IsFalse(_tree.Contains(new TestElement(2)));
+            Assert.IsFalse(_tree.Contains(new TestElement(4)));
+            Assert.IsFalse(_tree.Contains(new TestElement(7)));
+            Assert.IsFalse(_tree.Contains(new TestElement(100)));
+
+            Assert.IsTrue(_tree.Contains(new TestElement(6)));
+            Assert.IsTrue(_tree.Contains(new TestElement(1)));           
+            Assert.IsTrue(_tree.Contains(new TestElement(8)));        
+            Assert.IsTrue(_tree.Contains(new TestElement(3)));
+
+            Assert.AreEqual(4, _tree.Count);
+        }
+
+        [Test]
+        public void LinqTest()
+        {
+            _tree.Add(new TestElement(2));
+            _tree.Add(new TestElement(4));
+            _tree.Add(new TestElement(1));
+            _tree.Add(new TestElement(8));
+            _tree.Add(new TestElement(6));
+            _tree.Add(new TestElement(7));
+            _tree.Add(new TestElement(3));
+            _tree.Add(new TestElement(100));
+ 
+            Assert.IsTrue(_tree.Any(x => x.Id == 1));
+            Assert.AreEqual(100, _tree.Max().Id);
+            Assert.AreEqual(6 , _tree.ElementAt(4).Id);
         }
 
         [Test]
@@ -264,10 +355,12 @@ namespace NTree.Test.BinarySearchTree
                 _tree.Add(numbers[i]);
             }
 
-            List<TestElement> list1 = numbers.OrderBy(u => u.Id).ToList();
-            List<TestElement> list2 = new List<TestElement>(_tree);
+            List<TestElement> list1 = numbers.OrderBy(u => u.Id).Distinct().ToList();
+            List<TestElement> list2 = new List<TestElement>(_tree); //create from enumerator
 
             CollectionAssert.AreEqual(list1, list2);
         }
+
+        
     }
 }

@@ -53,7 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BinarySearchTree\AVLTreeTest.cs" />
+    <Compile Include="BinarySearchTree\RBTreeTest.cs" />
     <Compile Include="BinarySearchTree\BinarySearchTreeTest.cs" />
     <Compile Include="BinarySearchTree\BinaryTreeTestBase.cs" />
     <Compile Include="BinarySearchTree\TestElement.cs" />

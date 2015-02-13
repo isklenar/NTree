@@ -5,14 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using NTree.Common;
 
-namespace NTree.AVLTree
+namespace NTree.RBTree
 {
-    class AVLNode<T> : TreeNode<T> where T : IComparable
+    class RBNode<T> : TreeNode<T> where T : IComparable
     {
-        public AVLNode(IComparable item) : base(item)
+        public RBNode(IComparable item) : base(item)
         {
         }
-
-        public int Height { get; set; }
     }
 }
