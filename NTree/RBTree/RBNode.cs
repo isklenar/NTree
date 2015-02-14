@@ -7,7 +7,6 @@ namespace NTree.RBTree
     {
         public RBNode(IComparable item) : base(item)
         {
-            Colour = RBColour.Red;
         }
 
         public RBColour Colour { get; set; }

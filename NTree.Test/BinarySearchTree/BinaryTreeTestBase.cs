@@ -361,6 +361,21 @@ namespace NTree.Test.BinarySearchTree
             CollectionAssert.AreEqual(list1, list2);
         }
 
-        
+        [Test]
+        public void InsertAndContainsGrowingSequence([Range(0, 100000, 20000)] int n)
+        {
+            TestElement[] numbers = new TestElement[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                numbers[i] = new TestElement(i);
+                _tree.Add(numbers[i]);
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                Assert.IsTrue(_tree.Contains(numbers[i]));
+            }
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace NTree.RBTree
 
             if (Root == null)
             {
-                Root = new RBNode<T>(item);
+                Root = new RBNode<T>(item) { Colour = RBColour.Black };
                 _count++;
                 return;
             }
@@ -29,7 +29,7 @@ namespace NTree.RBTree
 
             while (currentNode != null)
             {
-                prevNode = (RBNode<T>)currentNode;
+                prevNode = currentNode;
 
                 int comparison = item.CompareTo(currentNode.Element);
                 if (comparison == 0) //element exists
@@ -51,9 +51,10 @@ namespace NTree.RBTree
             }
 
             //currentNode is null at this point
-            currentNode = new RBNode<T>(item) { Parent = prevNode };
+            currentNode = new RBNode<T>(item) { Parent = prevNode, Colour = RBColour.Red};
             _count++;
 
+            //prevnode is parent
             if (left)
             {
                 prevNode.Left = currentNode;
@@ -131,15 +132,21 @@ namespace NTree.RBTree
         {
             RBNode<T> nextCheck = null;
             RBNode<T> grandparent = GrandParent(node);
-            if (grandparent!= null && ReferenceEquals(node, node.Parent.Right) && ReferenceEquals(node.Parent, grandparent.Left))
+
+            if (grandparent == null)
             {
-                RotateLeft(node);
+                return;
+            }
+
+            if (ReferenceEquals(node, node.Parent.Right) && ReferenceEquals(node.Parent, grandparent.Left))
+            {
+                RotateLeft((RBNode<T>) node.Parent);
                 
                 nextCheck = (RBNode<T>)node.Left;
             }
-            else if (grandparent != null && ReferenceEquals(node, node.Parent.Left) && ReferenceEquals(node.Parent, grandparent.Right))
+            else if (ReferenceEquals(node, node.Parent.Left) && ReferenceEquals(node.Parent, grandparent.Right))
             {
-                RotateRight(node);
+                RotateRight((RBNode<T>) node.Parent);
                 
                 nextCheck = (RBNode<T>)node.Right;
             }
@@ -148,65 +155,71 @@ namespace NTree.RBTree
         }
 
         /// <summary>
-        /// Last case, parent is red, but uncle black, current node is left child and parent of also left child
+        /// Last case, parent is red, but uncle black, current node is left child and parent is also left child
         /// </summary>
         /// <param name="node"></param>
         private void InsertCheckCase5(RBNode<T> node)
         {
             RBNode<T> grandparent = GrandParent(node);
-            if (grandparent == null)
-            {
-                return;
-            }
+
             RBNode<T> parent = (RBNode<T>)node.Parent;
             parent.Colour = RBColour.Black;
+            grandparent.Colour = RBColour.Red;
 
             if (ReferenceEquals(node, node.Parent.Left))
             {
+                RBNode<T> tmp = (RBNode<T>) node.Parent;
+                bool wasRoot = grandparent.Parent == null;
                 RotateRight(grandparent);
+
+                if (wasRoot)
+                {
+                    Root = tmp;
+                }
             }
             else
             {
+                RBNode<T> tmp = (RBNode<T>)node.Parent;
+                bool wasRoot = grandparent.Parent == null;
+
                 RotateLeft(grandparent);
+
+                if (wasRoot)
+                {
+                    Root = tmp;
+                }
             }
 
         }
 
         private void RotateRight(RBNode<T> node)
         {
-            RBNode<T> grandparent = GrandParent(node);
-            RBNode<T> parent = (RBNode<T>)grandparent.Left;
+            RBNode<T> tmp = (RBNode<T>) node.Left;
 
-            //rotate right
-            grandparent.Right = node;
-            node.Parent = grandparent;
-
-            parent.Left = node.Right;
-            if (node.Right != null)
+            tmp.Left = node.Right;
+            if (tmp.Left != null)
             {
-                node.Right.Parent = parent;
+                node.Left.Parent = node;
             }
 
-            node.Right = parent;
-            parent.Parent = node; ;
+            tmp.Parent = node.Parent;
+            tmp.Right = node;
+            node.Parent = tmp;
         }
 
         private void RotateLeft(RBNode<T> node)
         {
-            RBNode<T> grandparent = GrandParent(node);
-            RBNode<T> parent = (RBNode<T>)grandparent.Left;
+            RBNode<T> tmp = (RBNode<T>)node.Right;
 
-            grandparent.Left = node;
-            node.Parent = grandparent;
+            node.Right = tmp.Left;
 
-            parent.Right = node.Left;
-            if (node.Left != null)
+            if (node.Right != null)
             {
-                node.Left.Parent = parent;
+                node.Right.Parent = node;
             }
-
-            node.Left = parent;
-            parent.Parent = node;
+            tmp.Parent = node.Parent;
+            tmp.Left = node;
+            node.Parent = tmp;
         }
 
         public override bool Remove(T item)
@@ -215,7 +228,7 @@ namespace NTree.RBTree
         }
 
 
-        private RBNode<T> GrandParent(RBNode<T> node)
+        private RBNode<T> GrandParent(TreeNode<T> node)
         {
             if (node != null && node.Parent != null)
             {

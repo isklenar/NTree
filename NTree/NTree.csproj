@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AVLTree\AVLNode.cs" />
+    <Compile Include="AVLTree\AVLTree.cs" />
     <Compile Include="BinarySearchTree\BinarySearchTree.cs" />
     <Compile Include="Common\BSTInOrderEnumerator.cs" />
     <Compile Include="Common\BinaryTree.cs" />
