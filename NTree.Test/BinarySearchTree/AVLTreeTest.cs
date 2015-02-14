@@ -20,7 +20,7 @@ namespace NTree.Test.BinarySearchTree
         [Test]
         public void MaxDepthTest()
         {
-            int n = 100000;
+            int n = 1000000;
             TestElement[] numbers = new TestElement[n];
 
             for (int i = 0; i < n; i++)

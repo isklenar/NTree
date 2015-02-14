@@ -362,7 +362,7 @@ namespace NTree.Test.BinarySearchTree
         }
 
         [Test]
-        public void InsertAndContainsGrowingSequence([Range(0, 100000, 20000)] int n)
+        public void InsertAndContainsGrowingSequence([Range(0, 15000, 5000)] int n)
         {
             TestElement[] numbers = new TestElement[n];
 
