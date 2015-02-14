@@ -1,38 +1,26 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using NTree.BinarySearchTree;
+using NTree.Common;
 
-
-namespace NTree.Common
+namespace NTree.BinaryTree
 {
-    public abstract class BinaryTree<T> : ICollection<T> where T : IComparable
+    public abstract class BinaryTree<T> : Tree<T> where T : IComparable
     {
-        protected TreeNode<T> Root;
         protected int _count;
         protected bool ReadOnly;
+        protected BTNode<T> Root { get; set; } 
 
         /// <summary>
         /// Return in-order enumerator
         /// </summary>
         /// <returns>in order IEnumerator</returns>
-        public IEnumerator<T> GetEnumerator()
+        public override IEnumerator<T> GetEnumerator()
         {
             return new BSTInOrderEnumerator<T>(Root);
         }
 
-        /// <summary>
-        /// Return in-order enumerator
-        /// </summary>
-        /// <returns>in order IEnumerator</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public abstract void Add(T item);
-
-        public void Clear()
+        public override void Clear()
         {
             if (ReadOnly)
             {
@@ -42,12 +30,12 @@ namespace NTree.Common
             _count = 0;
         }
 
-        public bool Contains(T item)
+        public override bool Contains(T item)
         {
             return FindElement(item) != null;
         }
-        
-        public void CopyTo(T[] array, int arrayIndex)
+
+        public override void CopyTo(T[] array, int arrayIndex)
         {
             int currentIndex = arrayIndex;
             foreach (var element in this)
@@ -55,22 +43,20 @@ namespace NTree.Common
                 array[currentIndex++] = element;
             }
         }
-        
-        public abstract bool Remove(T item);
 
-        public int Count
+        public override int Count
         {
             get { return _count; }
         }
 
-        public bool IsReadOnly
+        public override  bool IsReadOnly
         {
             get { return ReadOnly; }
         }
 
-        protected TreeNode<T> FindElement(T item)
+        protected BTNode<T> FindElement(T item)
         {
-            TreeNode<T> currentNode = Root;
+            BTNode<T> currentNode = Root;
 
             while (currentNode != null)
             {
@@ -99,11 +85,11 @@ namespace NTree.Common
         /// 
         /// From BST definition, min node is the left most node
         /// </summary>
-        /// <param name="subTreeNode">sub tree root</param>
+        /// <param name="subBtNode">sub tree root</param>
         /// <returns>node with min value</returns>
-        protected TreeNode<T> FindMinInSubtree(TreeNode<T> subTreeNode)
+        protected BTNode<T> FindMinInSubtree(BTNode<T> subBtNode)
         {
-            var currentNode = subTreeNode;
+            var currentNode = subBtNode;
             while (currentNode.Left != null)
             {
                 currentNode = currentNode.Left;

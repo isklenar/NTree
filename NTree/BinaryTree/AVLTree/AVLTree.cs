@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NTree.Common;
 
-namespace NTree.AVLTree
+namespace NTree.BinaryTree.AVLTree
 {
     public class AVLTree<T> : BinaryTree<T> where T : IComparable
     {
 
         public int MaxDepth
         {
-            get { return ((AVLNode<T>) Root).Height; }
+            get { return Root == null ? 0 : ((AVLNode<T>) Root).Height; }
         }
 
         public override void Add(T item)
@@ -85,7 +80,7 @@ namespace NTree.AVLTree
             return root;
         }
 
-        private int NodeHeight(TreeNode<T> node)
+        private int NodeHeight(BTNode<T> node)
         {
 
             if (node == null)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NTree.AVLTree;
+using NTree.BinaryTree.AVLTree;
 using NUnit.Framework;
 
 namespace NTree.Test.BinarySearchTree
@@ -18,9 +18,8 @@ namespace NTree.Test.BinarySearchTree
         }
     
         [Test]
-        public void MaxDepthTest()
+        public void MaxDepthTest([Range(0, 1000000, 200000)] int n)
         {
-            int n = 1000000;
             TestElement[] numbers = new TestElement[n];
 
             for (int i = 0; i < n; i++)
@@ -29,8 +28,8 @@ namespace NTree.Test.BinarySearchTree
                 _tree.Add(numbers[i]);
             }
 
-            int maxAllowedDepth = (int) (Math.Log(n, 2) * 2);
 
+            int maxAllowedDepth = n == 0 ? 1 : (int)(Math.Log(n, 2) * 1.5); //AVL has depth at most ~1.44*log(n)
             AVLTree<TestElement> tree = (AVLTree<TestElement>) _tree;
             Assert.Greater(maxAllowedDepth, tree.MaxDepth);
         }

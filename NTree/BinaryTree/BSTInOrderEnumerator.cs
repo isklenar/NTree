@@ -2,16 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace NTree.Common
+namespace NTree.BinaryTree
 {
     class BSTInOrderEnumerator<T> : IEnumerator<T> where T : IComparable
     {
-        private TreeNode<T> _root;
-        private TreeNode<T> _current;
+        private BTNode<T> _root;
+        private BTNode<T> _current;
 
         private bool _first = true;
 
-        public BSTInOrderEnumerator(TreeNode<T> root)
+        public BSTInOrderEnumerator(BTNode<T> root)
         {
             _root = root;
             _current = _root;

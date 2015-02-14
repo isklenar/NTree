@@ -39,13 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AVLTree\AVLNode.cs" />
-    <Compile Include="AVLTree\AVLTree.cs" />
-    <Compile Include="BinarySearchTree\BinarySearchTree.cs" />
-    <Compile Include="Common\BSTInOrderEnumerator.cs" />
-    <Compile Include="Common\BinaryTree.cs" />
-    <Compile Include="BinarySearchTree\BSTNode.cs" />
-    <Compile Include="Common\TreeNode.cs" />
+    <Compile Include="BinaryTree\AVLTree\AVLNode.cs" />
+    <Compile Include="BinaryTree\AVLTree\AVLTree.cs" />
+    <Compile Include="BinaryTree\BinarySearchTree\BinarySearchTree.cs" />
+    <Compile Include="BinaryTree\BSTInOrderEnumerator.cs" />
+    <Compile Include="BinaryTree\BinaryTree.cs" />
+    <Compile Include="BinaryTree\BinarySearchTree\BSTNode.cs" />
+    <Compile Include="BinaryTree\BTNode.cs" />
+    <Compile Include="Common\Tree.cs" />
+    <Compile Include="NTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
