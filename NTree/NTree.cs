@@ -9,10 +9,6 @@ namespace NTree
 {
     public static class NTree<T> where T : IComparable
     {
-        public static BinaryTree<T> AsReadOnly(BinaryTree<T> tree)
-        {
-            
-        }
 
     }
 }

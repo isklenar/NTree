@@ -46,6 +46,7 @@
     <Compile Include="BinaryTree\BinaryTree.cs" />
     <Compile Include="BinaryTree\BinarySearchTree\BSTNode.cs" />
     <Compile Include="BinaryTree\BTNode.cs" />
+    <Compile Include="Common\ReadOnlyTree.cs" />
     <Compile Include="Common\Tree.cs" />
     <Compile Include="NTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -74,6 +74,7 @@ namespace NTree.BinaryTree
         public void Reset()
         {
             _current = _root;
+            _first = true;
         }
 
         public T Current

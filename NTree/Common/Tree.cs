@@ -25,7 +25,7 @@ namespace NTree.Common
 
         public ReadOnlyTree<T> AsReadOnly()
         {
-            return new ReadOnlyTree<T>();
+            return new ReadOnlyTree<T>(this);
         }
     }
 }

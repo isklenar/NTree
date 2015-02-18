@@ -24,7 +24,47 @@ namespace NTree.BinaryTree.AVLTree
 
         public override bool Remove(T item)
         {
-            throw new NotImplementedException();
+
+            AVLNode<T> removedNode = (AVLNode<T>) RemoveNode(item);
+            if (removedNode == null)
+            {
+                return false;
+            }
+
+            AVLNode<T> currentNode = (AVLNode<T>) removedNode.Parent;
+            while (currentNode != null)
+            {
+                int balance = NodeHeight(currentNode.Left) - NodeHeight(currentNode.Right);
+                if (balance == -2)
+                {
+                    int rightBalance = NodeHeight(currentNode.Parent.Left) - NodeHeight(currentNode.Parent.Right);
+                    if (rightBalance == -1)
+                    {
+                        RotateLeft(currentNode);
+                    }
+                    else
+                    {
+                        RotateRightLeft(currentNode);
+                    }
+                }
+
+                if (balance == 2)
+                {
+                    int leftBalance = NodeHeight(currentNode.Left.Left) - NodeHeight(currentNode.Left.Right);
+                    if (leftBalance == -1)
+                    {
+                        RotateLeftRight(currentNode);
+                    }
+                    else
+                    {
+                        RotateRight(currentNode);
+                    }
+                }
+
+                currentNode = (AVLNode<T>)currentNode.Parent;
+            }
+
+            return true;
         }
 
         private AVLNode<T> AVLInsert(AVLNode<T> root, AVLNode<T> node, AVLNode<T> parent)

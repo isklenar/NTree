@@ -45,7 +45,7 @@ namespace NTree.Test.BinarySearchTree
          **/
 
         [Test]
-        public void InsertAndContainsLayered()
+        public void InsertAndContainsSmallScale()
         {
             _tree.Add(new TestElement(4));
             _tree.Add(new TestElement(2));
@@ -108,6 +108,31 @@ namespace NTree.Test.BinarySearchTree
             Assert.IsFalse(_tree.Contains(new TestElement(1)));
         }*/
 
+        [Test]
+        public void InsertAndRemoveLargeScale()
+        {
+            int n = 100000;
+
+            Random random = new Random();
+            TestElement[] numbers = new TestElement[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                numbers[i] = new TestElement(random.Next());
+                _tree.Add(numbers[i]);
+            }
+
+            var removeOrder = numbers.OrderBy(x => random.Next()).ToList();
+
+            foreach (var item in removeOrder)
+            {
+                _tree.Remove(item);
+                Assert.IsFalse(_tree.Contains(item));
+            }
+
+            Assert.AreEqual(0, _tree.Count);
+        }
+
         /*
          *     2
          *   /   \
@@ -120,7 +145,7 @@ namespace NTree.Test.BinarySearchTree
          *            7
          **/
         [Test]
-        public void InsertAndRemoveDuplicateElement()
+        public void InsertAndRemoveSmallScale()
         {
             _tree.Add(new TestElement(2));
             _tree.Add(new TestElement(4));
@@ -130,16 +155,16 @@ namespace NTree.Test.BinarySearchTree
             _tree.Add(new TestElement(7));
             _tree.Add(new TestElement(3));
             _tree.Add(new TestElement(100));
-            _tree.Add(new TestElement(4)); //duplicate
+            _tree.Add(new TestElement(5));
 
-            _tree.Remove(new TestElement(4));
-            Assert.IsFalse(_tree.Contains(new TestElement(4)));
+            _tree.Remove(new TestElement(1)); //this should force rotation
+            Assert.IsFalse(_tree.Contains(new TestElement(1)));
+            Assert.IsTrue(_tree.Contains(new TestElement(4)));
             Assert.IsTrue(_tree.Contains(new TestElement(2)));
-            Assert.IsTrue(_tree.Contains(new TestElement(1)));
             Assert.IsTrue(_tree.Contains(new TestElement(7)));
             Assert.IsTrue(_tree.Contains(new TestElement(8)));
             Assert.IsTrue(_tree.Contains(new TestElement(100)));
-            Assert.AreEqual(7, _tree.Count);
+            Assert.AreEqual(8, _tree.Count);
         }
 
         /*
