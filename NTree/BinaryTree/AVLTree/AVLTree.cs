@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using NTree.Common;
 
 namespace NTree.BinaryTree.AVLTree
 {
@@ -222,5 +226,78 @@ namespace NTree.BinaryTree.AVLTree
             return RotateLeft(node);
         }
 
+
+        internal IComparable GetItem(T item)
+        {
+            return FindElement(item).Element;
+        }
+    }
+
+    public class AVLTree<K, V> : IEnumerable where K : IComparable
+    {
+        private AVLTree<KeyValueNode<K, V>> _tree;
+
+        public AVLTree()
+        {
+            _tree = new AVLTree<KeyValueNode<K, V>>();
+        }
+
+        public void Add(K key, V value)
+        {
+            KeyValueNode<K, V> item = new KeyValueNode<K, V>(key, value);
+            _tree.Add(item);
+        }
+
+        public bool Remove(K key)
+        {
+            KeyValueNode<K, V> item = new KeyValueNode<K, V>(key, default(V));
+            return _tree.Remove(item);
+        }
+
+        public bool Contains(K key)
+        {
+            KeyValueNode<K, V> item = new KeyValueNode<K, V>(key, default(V));
+            return _tree.Contains(item);  
+        }
+
+        public V GetValue(K key)
+        {
+            KeyValueNode<K, V> item = new KeyValueNode<K, V>(key, default(V));
+            var ret = _tree.GetItem(item) as KeyValueNode<K, V>;
+            return ret.Value;
+        }
+
+        public IEnumerator<V> GetEnumerator()
+        {
+            KeyValueNode<K, V>[] items = new KeyValueNode<K, V>[_tree.Count];
+            _tree.CopyTo(items, 0);
+
+            var values = items.Select(u => u.Value).ToList();
+            return values.GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void CopyTo(V[] array, int arrayIndex)
+        {
+            KeyValueNode<K, V>[] items = new KeyValueNode<K, V>[_tree.Count];
+            _tree.CopyTo(items, 0);
+
+            var values = items.Select(u => u.Value).ToList();
+            foreach (var value in values)
+            {
+                array[arrayIndex++] = value;
+            }
+        }
+
+        public void Clear()
+        {
+            _tree.Clear();
+        }
+
+        public int Count { get { return _tree.Count; } }
+        public bool IsReadOnly { get { return _tree.IsReadOnly; } }
     }
 }
