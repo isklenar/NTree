@@ -63,7 +63,12 @@ namespace NTree.BinaryTree.BinarySearchTree
                 throw new NotSupportedException("Tree is read only");
             }
             return RemoveNode(item) != null;           
-        }   
+        }
+
+        internal IComparable GetItem(T item)
+        {
+            return FindElement(item).Element;
+        }
 
     }
 
@@ -97,13 +102,20 @@ namespace NTree.BinaryTree.BinarySearchTree
 
         public void Clear()
         {
-            _tree.Clear();;
+            _tree.Clear();
         }
 
         public bool Contains(K key)
         {
             var item = new KeyValueNode<K, V>(key, default(V));
             return _tree.Contains(item);
+        }
+
+        public V GetValue(K key)
+        {
+            KeyValueNode<K, V> item = new KeyValueNode<K, V>(key, default(V));
+            var ret = _tree.GetItem(item) as KeyValueNode<K, V>;
+            return ret.Value;
         }
 
         public void CopyTo(V[] array, int arrayIndex)
