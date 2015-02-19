@@ -12,19 +12,61 @@ namespace NTree.BinaryTree.AVLTree
 
         public override void Add(T item)
         {
-            if (Contains(item))
+            if (Root == null)
             {
+                Root = new AVLNode<T>(item);
+                _count++;
                 return;
             }
-            AVLNode<T> node = new AVLNode<T>(item);
 
-            Root = AVLInsert((AVLNode<T>) Root, node, null);
+            AVLNode<T> currentNode = (AVLNode<T>) Root;
+
+            while (currentNode != null)
+            {
+                var prevNode = currentNode;
+
+                int comparison = item.CompareTo(currentNode.Element);
+                if (comparison == 0) //element exists
+                {
+                    return;
+                }
+                if (comparison > 0)
+                {
+                    currentNode = (AVLNode<T>)currentNode.Right;
+                    if (currentNode == null)
+                    {
+                        currentNode = new AVLNode<T>(item) { Parent = prevNode };
+                        prevNode.Right = currentNode;
+                        break;
+                    }
+                }
+
+                if (comparison < 0)
+                {
+                    currentNode = (AVLNode<T>)currentNode.Left;
+
+                    if (currentNode == null)
+                    {
+                        currentNode = new AVLNode<T>(item) { Parent = prevNode };
+                        prevNode.Left = currentNode;
+                        break;
+                    }
+                }
+
+            }
+            
+            AVLBalance(currentNode);
+            currentNode.Height = NodeHeight(currentNode);
             _count++;
+        }
+
+        private void AVLBalance(AVLNode<T> currentNode)
+        {
+            
         }
 
         public override bool Remove(T item)
         {
-
             AVLNode<T> removedNode = (AVLNode<T>) RemoveNode(item);
             if (removedNode == null)
             {
@@ -37,27 +79,27 @@ namespace NTree.BinaryTree.AVLTree
                 int balance = NodeHeight(currentNode.Left) - NodeHeight(currentNode.Right);
                 if (balance == -2)
                 {
-                    int rightBalance = NodeHeight(currentNode.Parent.Left) - NodeHeight(currentNode.Parent.Right);
-                    if (rightBalance == -1)
+                    int leftBalance = NodeHeight(currentNode.Left.Left) - NodeHeight(currentNode.Left.Right);
+                    if (leftBalance == 1)
                     {
-                        RotateLeft(currentNode);
+                        RotateLeftRight(currentNode);
                     }
-                    else
+                    else if (leftBalance == -1 || leftBalance == 0)
                     {
-                        RotateRightLeft(currentNode);
+                        RotateRight(currentNode);
                     }
                 }
 
                 if (balance == 2)
                 {
-                    int leftBalance = NodeHeight(currentNode.Left.Left) - NodeHeight(currentNode.Left.Right);
-                    if (leftBalance == -1)
+                    int rightBalance = NodeHeight(currentNode.Right.Left) - NodeHeight(currentNode.Right.Right);
+                    if (rightBalance == 1 || rightBalance == 0)
                     {
-                        RotateLeftRight(currentNode);
+                        RotateLeft(currentNode);
                     }
-                    else
+                    else if (rightBalance == -1)
                     {
-                        RotateRight(currentNode);
+                        RotateRightLeft(currentNode);
                     }
                 }
 
@@ -116,19 +158,17 @@ namespace NTree.BinaryTree.AVLTree
                 }
             }
 
-            root.Height = Math.Max(NodeHeight(root.Left), NodeHeight(root.Right)) + 1;
+            root.Height = NodeHeight(root);
             return root;
         }
 
         private int NodeHeight(BTNode<T> node)
         {
-
             if (node == null)
             {
-                return -1;
+                return 0;
             }
-            AVLNode<T> tmp = (AVLNode<T>) node;
-            return tmp.Height;
+            return 1 + Math.Max(NodeHeight(node.Left), NodeHeight(node.Right));
         }
 
         private AVLNode<T> RotateLeft(AVLNode<T> node)

@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using NTree.Common;
 
 namespace NTree.BinaryTree.BinarySearchTree
 {
@@ -6,11 +10,6 @@ namespace NTree.BinaryTree.BinarySearchTree
     {
         public override void Add(T item)
         {
-            if (ReadOnly)
-            {
-                throw new NotSupportedException("Tree is read only");
-            }
-
             if (Root == null)
             {
                 Root = new BSTNode<T>(item);
@@ -19,12 +18,10 @@ namespace NTree.BinaryTree.BinarySearchTree
             }
 
             var currentNode = Root;
-            BSTNode<T> prevNode = null;
-            bool left = false;
 
             while (currentNode != null)
             {
-                prevNode = (BSTNode<T>)currentNode;
+                var prevNode = (BSTNode<T>)currentNode;
 
                 int comparison = item.CompareTo(currentNode.Element);
                 if (comparison == 0) //element exists
@@ -34,30 +31,29 @@ namespace NTree.BinaryTree.BinarySearchTree
                 if (comparison > 0)
                 {
                     currentNode = (BSTNode<T>)currentNode.Right;
-                    left = false;
+                    if (currentNode == null)
+                    {
+                        currentNode = new BSTNode<T>(item) { Parent = prevNode };
+                        prevNode.Right = currentNode;
+                        break;
+                    }
                 }
 
                 if (comparison < 0)
                 {
                     currentNode = (BSTNode<T>)currentNode.Left;
-                    left = true;
+
+                    if (currentNode == null)
+                    {
+                        currentNode = new BSTNode<T>(item) { Parent = prevNode };
+                        prevNode.Left = currentNode;
+                        break;
+                    }
                 }
 
             }
 
-            //currentNode is null at this point
-            currentNode = new BSTNode<T>(item) { Parent = prevNode };
             _count++;
-
-            if (left)
-            {
-                prevNode.Left = currentNode;
-            }
-            else
-            {
-                prevNode.Right = currentNode;
-            }
-
         }
 
         public override bool Remove(T item)
@@ -69,5 +65,66 @@ namespace NTree.BinaryTree.BinarySearchTree
             return RemoveNode(item) != null;           
         }   
 
+    }
+
+    public class BinarySearchTree<K, V> : IEnumerable<V> where K : IComparable
+    {
+        private BinarySearchTree<KeyValueNode<K, V>> _tree;
+
+        public BinarySearchTree()
+        {
+            _tree = new BinarySearchTree<KeyValueNode<K, V>>();
+        }
+
+        public IEnumerator<V> GetEnumerator()
+        {
+            KeyValueNode<K, V>[] items = new KeyValueNode<K, V>[_tree.Count];
+            _tree.CopyTo(items, 0);
+
+            var values = items.Select(u => u.Value).ToList();
+            return values.GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void Add(K key, V value)
+        {
+            var item = new KeyValueNode<K, V>(key, value);
+            _tree.Add(item);
+        }
+
+        public void Clear()
+        {
+            _tree.Clear();;
+        }
+
+        public bool Contains(K key)
+        {
+            var item = new KeyValueNode<K, V>(key, default(V));
+            return _tree.Contains(item);
+        }
+
+        public void CopyTo(V[] array, int arrayIndex)
+        {
+            KeyValueNode<K, V>[] items = new KeyValueNode<K, V>[_tree.Count];
+            _tree.CopyTo(items, 0);
+
+            var values = items.Select(u => u.Value).ToList();
+            foreach (var value in values)
+            {
+                array[arrayIndex++] = value;
+            }
+        }
+
+        public bool Remove(K key)
+        {
+            var item = new KeyValueNode<K, V>(key, default(V));
+            return _tree.Remove(item);
+        }
+
+        public int Count { get { return _tree.Count; } }
+        public bool IsReadOnly { get { return _tree.IsReadOnly; } }
     }
 }

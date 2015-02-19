@@ -49,6 +49,8 @@
     <Compile Include="Common\ReadOnlyTree.cs" />
     <Compile Include="Common\Tree.cs" />
     <Compile Include="NTree.cs" />
+    <Compile Include="PriorityQueue\PQItem.cs" />
+    <Compile Include="PriorityQueue\PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
