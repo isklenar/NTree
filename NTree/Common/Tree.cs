@@ -28,4 +28,22 @@ namespace NTree.Common
             return new ReadOnlyTree<T>(this);
         }
     }
+
+    public abstract class Tree<K, V> : IEnumerable where K : IComparable
+    {
+        public abstract IEnumerator<V> GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public abstract void Add(K key, V value);
+        public abstract void Clear();
+        public abstract bool Contains(K key);
+        public abstract void CopyTo(V[] array, int arrayIndex);
+        public abstract bool Remove(K key);
+        public abstract int Count { get; }
+        public abstract bool IsReadOnly { get; }
+        public abstract V GetValue(K key);
+    }
 }

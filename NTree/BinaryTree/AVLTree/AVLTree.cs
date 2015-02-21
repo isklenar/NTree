@@ -6,78 +6,98 @@ using NTree.Common;
 
 namespace NTree.BinaryTree.AVLTree
 {
+    /// <summary>
+    /// Self-balancing binary search tree.
+    /// Guarantees O(log(n)) insert, remove and search by performing balancing operations.
+    /// </summary>
+    /// <typeparam name="T">Type implementing IComparable interface</typeparam>
     public class AVLTree<T> : BinaryTree<T> where T : IComparable
     {
-
+        /// <summary>
+        /// Returns maximal depth of tree.
+        /// </summary>
         public int MaxDepth
         {
-            get { return Root == null ? 0 : ((AVLNode<T>) Root).Height; }
+            get { return NodeHeight(Root); }
         }
 
+        /// <summary>
+        /// Adds item into the tree
+        /// </summary>
+        /// <param name="item">item to add</param>
         public override void Add(T item)
         {
-            if (Root == null)
+            var node = InnerAdd(item);
+            if (node == null)
             {
-                Root = new AVLNode<T>(item);
-                _count++;
                 return;
             }
 
-            AVLNode<T> currentNode = (AVLNode<T>) Root;
-
-            while (currentNode != null)
+            var parent = node.Parent;
+            while (parent != null)
             {
-                var prevNode = currentNode;
-
-                int comparison = item.CompareTo(currentNode.Element);
-                if (comparison == 0) //element exists
+                int balance = NodeBalance(parent);
+                if (balance == 2 || balance == -2)
                 {
-                    return;
+                    AVLBalanceNode(parent, balance);
                 }
-                if (comparison > 0)
-                {
-                    currentNode = (AVLNode<T>)currentNode.Right;
-                    if (currentNode == null)
-                    {
-                        currentNode = new AVLNode<T>(item) { Parent = prevNode };
-                        prevNode.Right = currentNode;
-                        break;
-                    }
-                }
-
-                if (comparison < 0)
-                {
-                    currentNode = (AVLNode<T>)currentNode.Left;
-
-                    if (currentNode == null)
-                    {
-                        currentNode = new AVLNode<T>(item) { Parent = prevNode };
-                        prevNode.Left = currentNode;
-                        break;
-                    }
-                }
-
+                parent = parent.Parent;
             }
             
-            AVLBalance(currentNode);
-            currentNode.Height = NodeHeight(currentNode);
-            _count++;
         }
 
-        private void AVLBalance(AVLNode<T> currentNode)
+        private void AVLBalanceNode(BTNode<T> node, int balance)
         {
-            
+            if (balance == 2)
+            {
+                int rightBalance = NodeBalance(node.Right);
+                if (rightBalance == 1 || rightBalance == 0)
+                {
+                    RotateLeftLeft(node);
+                }
+                if (rightBalance == -1)
+                {
+                    RotateRightLeft(node);
+                }
+            }
+            if (balance == -2)
+            {
+                int leftBalance = NodeBalance(node.Left);
+                if (leftBalance == 1)
+                {
+                    RotateLeftRight(node);
+                }
+                if (leftBalance == -1 || leftBalance == 0)
+                {
+                    RotateRightRight(node);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Determines balance of node.
+        /// Null node returns 0.
+        /// </summary>
+        /// <param name="node">node for which we want to know balance</param>
+        /// <returns>balance of node</returns>
+        private int NodeBalance(BTNode<T> node)
+        {
+            if (node == null)
+            {
+                return 0;
+            }
+            return NodeHeight(node.Left) - NodeHeight(node.Right);
         }
 
         public override bool Remove(T item)
         {
-            AVLNode<T> removedNode = (AVLNode<T>) RemoveNode(item);
+            var removedNode = RemoveNode(item);
             if (removedNode == null)
             {
                 return false;
             }
 
-            AVLNode<T> currentNode = (AVLNode<T>) removedNode.Parent;
+            var currentNode = removedNode.Parent;
             while (currentNode != null)
             {
                 int balance = NodeHeight(currentNode.Left) - NodeHeight(currentNode.Right);
@@ -90,7 +110,7 @@ namespace NTree.BinaryTree.AVLTree
                     }
                     else if (leftBalance == -1 || leftBalance == 0)
                     {
-                        RotateRight(currentNode);
+                        RotateRightRight(currentNode);
                     }
                 }
 
@@ -99,7 +119,7 @@ namespace NTree.BinaryTree.AVLTree
                     int rightBalance = NodeHeight(currentNode.Right.Left) - NodeHeight(currentNode.Right.Right);
                     if (rightBalance == 1 || rightBalance == 0)
                     {
-                        RotateLeft(currentNode);
+                        RotateLeftLeft(currentNode);
                     }
                     else if (rightBalance == -1)
                     {
@@ -107,26 +127,26 @@ namespace NTree.BinaryTree.AVLTree
                     }
                 }
 
-                currentNode = (AVLNode<T>)currentNode.Parent;
+                currentNode = currentNode.Parent;
             }
 
             return true;
         }
 
-        private AVLNode<T> AVLInsert(AVLNode<T> root, AVLNode<T> node, AVLNode<T> parent)
+        /*private BTNode<T> AVLInsert(BTNode<T> root, BTNode<T> node, BTNode<T> parent)
         {
             if (root == null)
             {
-                root = new AVLNode<T>(node.Element) {Parent = parent};
+                root = new BTNode<T>(node.Element) { Parent = parent };
             }
             else
             {
                 int comparison = node.Element.CompareTo(root.Element);
                 if (comparison < 0)
                 {
-                    root.Left = AVLInsert((AVLNode<T>) root.Left, node, root);
+                    root.Left = AVLInsert(root.Left, node, root);
 
-                    AVLNode<T> leftNode = (AVLNode<T>)root.Left;
+                    var leftNode = root.Left;
                     if (leftNode.Height - NodeHeight(root.Right) == 2)
                     {
                         if (node.Element.CompareTo(leftNode.Element) < 0)
@@ -164,8 +184,13 @@ namespace NTree.BinaryTree.AVLTree
 
             root.Height = NodeHeight(root);
             return root;
-        }
+        }*/
 
+        /// <summary>
+        /// Determines height of node.
+        /// </summary>
+        /// <param name="node">node for which we want to know height</param>
+        /// <returns>height of node</returns>
         private int NodeHeight(BTNode<T> node)
         {
             if (node == null)
@@ -175,65 +200,116 @@ namespace NTree.BinaryTree.AVLTree
             return 1 + Math.Max(NodeHeight(node.Left), NodeHeight(node.Right));
         }
 
-        private AVLNode<T> RotateLeft(AVLNode<T> node)
+        /// <summary>
+        /// Performs single rotation to the left over a specified node.
+        /// </summary>
+        /// <param name="node">node to rotate</param>
+        private void RotateLeftLeft(BTNode<T> node)
         {
-            AVLNode<T> tmp = (AVLNode<T>) node.Right;
-            node.Right = tmp.Left;
-            if (node.Right != null)
+            bool isRoot = ReferenceEquals(Root, node);
+            if (node == null)
             {
-                node.Right.Parent = node;
+                return;
             }
-            tmp.Parent = node.Parent;
-            tmp.Left = node;
-            node.Parent = tmp;
-
-            node.Height = Math.Max(NodeHeight(node.Left), NodeHeight(node.Right)) + 1;
-            tmp.Height = Math.Max(NodeHeight(tmp.Right), node.Height) + 1;
-
-            return tmp;
-        }
-
-        private AVLNode<T> RotateRight(AVLNode<T> node)
-        {
-            AVLNode<T> tmp = (AVLNode<T>) node.Left;
+            var tmp = node.Left;
+            if (tmp == null)
+            {
+                return;
+            }
             node.Left = tmp.Right;
             if (node.Left != null)
             {
                 node.Left.Parent = node;
             }
-
             tmp.Parent = node.Parent;
             tmp.Right = node;
             node.Parent = tmp;
-
-            node.Height = Math.Max(NodeHeight(node.Left), NodeHeight(node.Right)) + 1;
-            tmp.Height = Math.Max(NodeHeight(tmp.Left), node.Height) + 1;
-
-            return tmp;
+            if (isRoot)
+            {
+                Root = tmp;
+            }
         }
 
-        private AVLNode<T> RotateLeftRight(AVLNode<T> node)
+        /// <summary>
+        /// Performs single right rotation over a node.
+        /// </summary>
+        /// <param name="node">node to rotate</param>
+        private void RotateRightRight(BTNode<T> node)
         {
-            AVLNode<T> tmp = (AVLNode<T>) node.Left;
-            node.Left = RotateLeft(tmp);
-            return RotateRight(node);
+            bool isRoot = ReferenceEquals(Root, node);
+            if (node == null)
+            {
+                return;
+            }
+            var tmp = node.Right;
+            if (tmp == null)
+            {
+                return;
+            }
+            node.Right = tmp.Left;
+            if (node.Right != null)
+            {
+                node.Right.Parent = node;
+            }
+
+            tmp.Parent = node.Parent;
+            tmp.Left = node;
+            node.Parent = tmp;
+            if (isRoot)
+            {
+                Root = tmp;
+            }
         }
 
-        private AVLNode<T> RotateRightLeft(AVLNode<T> node)
+        /// <summary>
+        /// Performs left-right rotation on node.
+        /// This is accomplished by first rotating left node.Left and then rotating right node.
+        /// </summary>
+        /// <param name="node">node to rotate</param>
+        private void RotateLeftRight(BTNode<T> node)
         {
-            AVLNode<T> tmp = (AVLNode<T>) node.Right;
-            node.Right = RotateRight(tmp);
-            return RotateLeft(node);
+            if (node == null)
+            {
+                return;
+            }
+            RotateLeftLeft(node.Left);
+            RotateRightRight(node);
         }
 
+        /// <summary>
+        /// Performs right-left rotation on node.
+        /// This is accomplished by first rotation right node.Right and then rotating left node
+        /// </summary>
+        /// <param name="node"></param>
+        private void RotateRightLeft(BTNode<T> node)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            RotateRightRight(node.Right);
+            RotateLeftLeft(node);
+        }
 
+        /// <summary>
+        /// Returns the same elements that is passed as argument.
+        /// Should only be used from within key-value tree.
+        /// 
+        /// For key-value trees, this allows you to pass in a new item with just key and retrieve an element with both key and value.
+        /// </summary>
+        /// <param name="item">item to retrieve</param>
+        /// <returns>item from tree</returns>
         internal IComparable GetItem(T item)
         {
             return FindElement(item).Element;
         }
     }
-
-    public class AVLTree<K, V> : IEnumerable where K : IComparable
+    /// <summary>
+    /// Key-Value version of self-balancing AVL tree.
+    /// </summary>
+    /// <typeparam name="K">Type implementing IComparable used as a key</typeparam>
+    /// <typeparam name="V">Any type used as a value</typeparam>
+    public class AVLTree<K, V> : BinaryTree<K, V>, IEnumerable where K : IComparable
     {
         private AVLTree<KeyValueNode<K, V>> _tree;
 
@@ -242,32 +318,32 @@ namespace NTree.BinaryTree.AVLTree
             _tree = new AVLTree<KeyValueNode<K, V>>();
         }
 
-        public void Add(K key, V value)
+        public override void Add(K key, V value)
         {
             KeyValueNode<K, V> item = new KeyValueNode<K, V>(key, value);
             _tree.Add(item);
         }
 
-        public bool Remove(K key)
+        public override bool Remove(K key)
         {
             KeyValueNode<K, V> item = new KeyValueNode<K, V>(key, default(V));
             return _tree.Remove(item);
         }
 
-        public bool Contains(K key)
+        public override bool Contains(K key)
         {
             KeyValueNode<K, V> item = new KeyValueNode<K, V>(key, default(V));
             return _tree.Contains(item);  
         }
 
-        public V GetValue(K key)
+        public override V GetValue(K key)
         {
             KeyValueNode<K, V> item = new KeyValueNode<K, V>(key, default(V));
             var ret = _tree.GetItem(item) as KeyValueNode<K, V>;
             return ret.Value;
         }
 
-        public IEnumerator<V> GetEnumerator()
+        public override IEnumerator<V> GetEnumerator()
         {
             KeyValueNode<K, V>[] items = new KeyValueNode<K, V>[_tree.Count];
             _tree.CopyTo(items, 0);
@@ -280,7 +356,7 @@ namespace NTree.BinaryTree.AVLTree
             return GetEnumerator();
         }
 
-        public void CopyTo(V[] array, int arrayIndex)
+        public override void CopyTo(V[] array, int arrayIndex)
         {
             KeyValueNode<K, V>[] items = new KeyValueNode<K, V>[_tree.Count];
             _tree.CopyTo(items, 0);
@@ -292,12 +368,12 @@ namespace NTree.BinaryTree.AVLTree
             }
         }
 
-        public void Clear()
+        public override void Clear()
         {
             _tree.Clear();
         }
 
-        public int Count { get { return _tree.Count; } }
-        public bool IsReadOnly { get { return _tree.IsReadOnly; } }
+        public override int Count { get { return _tree.Count; } }
+        public override bool IsReadOnly { get { return _tree.IsReadOnly; } }
     }
 }

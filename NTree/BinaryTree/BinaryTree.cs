@@ -9,17 +9,69 @@ namespace NTree.BinaryTree
     {
         protected int _count;
         protected bool ReadOnly;
-        protected BTNode<T> Root { get; set; } 
+        internal BTNode<T> Root { get; set; }
+
+        protected BTNode<T> InnerAdd(T item)
+        {
+            if (Contains(item))
+            {
+                return null;
+            }
+
+            var currentNode = Root;
+            BTNode<T> prevNode = null;
+            bool left = false;
+
+            while (currentNode != null)
+            {
+                prevNode = currentNode;
+                int comparison = item.CompareTo(currentNode.Element);
+                if (comparison < 0)
+                {
+                    currentNode = currentNode.Left;
+                    left = true;
+                }
+                if (comparison > 0)
+                {
+                    currentNode = currentNode.Right;
+                    left = false;
+                }
+            }
+            currentNode = new BTNode<T>(item);
+            if (Root == null)
+            {
+                Root = currentNode;
+            }
+            else
+            {
+                if (left)
+                {
+                    prevNode.Left = currentNode;
+                    currentNode.Parent = prevNode;
+                }
+                else
+                {
+                    prevNode.Right = currentNode;
+                    currentNode.Parent = prevNode;
+                }
+            }
+            _count++;
+
+            return currentNode;
+        }
 
         /// <summary>
-        /// Return in-order enumerator
+        /// Returns in-order enumerator.
         /// </summary>
         /// <returns>in order IEnumerator</returns>
         public override IEnumerator<T> GetEnumerator()
         {
             return new BSTInOrderEnumerator<T>(Root);
         }
-
+        /// <summary>
+        /// Clears tree of all data. 
+        /// </summary>
+        /// <exception cref="NotSupportedException">Throws NotSupportedException if tree is read-only.</exception>
         public override void Clear()
         {
             if (ReadOnly)
@@ -29,12 +81,21 @@ namespace NTree.BinaryTree
             Root = null;
             _count = 0;
         }
-
+        /// <summary>
+        /// Determines if tree contains element.
+        /// </summary>
+        /// <param name="item">element to find</param>
+        /// <returns>true if found, false if not</returns>
         public override bool Contains(T item)
         {
             return FindElement(item) != null;
         }
 
+        /// <summary>
+        /// Copies data in-order to an array, starting at index specified at arrayIndex.
+        /// </summary>
+        /// <param name="array">array to copy to</param>
+        /// <param name="arrayIndex">starting index of array</param>
         public override void CopyTo(T[] array, int arrayIndex)
         {
             int currentIndex = arrayIndex;
@@ -44,6 +105,9 @@ namespace NTree.BinaryTree
             }
         }
 
+        /// <summary>
+        /// Returns number of elements in tree.
+        /// </summary>
         public override int Count
         {
             get { return _count; }
@@ -54,6 +118,11 @@ namespace NTree.BinaryTree
             get { return ReadOnly; }
         }
 
+        /// <summary>
+        /// Removes node from tree and returns it.
+        /// </summary>
+        /// <param name="item">element to remove</param>
+        /// <returns>Node detached from tree, null if not found</returns>
         protected BTNode<T> RemoveNode(T item)
         {
             var nodeToRemove = FindElement(item);
@@ -110,7 +179,7 @@ namespace NTree.BinaryTree
         /// <summary>
         /// Removes a node with one child
         /// </summary>
-        /// <param name="nodeToRemove">node to remove</param>
+        /// <param name="node">node to remove</param>
         private void RemoveOneChildNode(BTNode<T> node)
         {
             var child = node.Left;
@@ -163,7 +232,8 @@ namespace NTree.BinaryTree
         }
 
         /// <summary>
-        /// Removes node with two children
+        /// Removes node with two children.
+        /// Detaches it from tree and replaces it with in-order successor.
         /// </summary>
         /// <param name="node">node to remove</param>
         private void RemoveTwoChildrenNode(BTNode<T> node)
@@ -202,6 +272,11 @@ namespace NTree.BinaryTree
             }
         }
 
+        /// <summary>
+        /// Finds element in tree.
+        /// </summary>
+        /// <param name="item">item to find</param>
+        /// <returns>node containing element, null if not found</returns>
         protected BTNode<T> FindElement(T item)
         {
             BTNode<T> currentNode = Root;
@@ -231,13 +306,13 @@ namespace NTree.BinaryTree
         /// <summary>
         /// Finds min value in subtree.
         /// 
-        /// From BST definition, min node is the left most node
+        /// From BST definition, min node is the left most node of tree.
         /// </summary>
-        /// <param name="subBtNode">sub tree root</param>
+        /// <param name="node">sub tree root</param>
         /// <returns>node with min value</returns>
-        protected BTNode<T> FindMinInSubtree(BTNode<T> subBtNode)
+        protected BTNode<T> FindMinInSubtree(BTNode<T> node)
         {
-            var currentNode = subBtNode;
+            var currentNode = node;
             while (currentNode.Left != null)
             {
                 currentNode = currentNode.Left;
@@ -246,5 +321,10 @@ namespace NTree.BinaryTree
             return currentNode;
         }
 
+    }
+
+    public abstract class BinaryTree<K, V> : Tree<K, V> where K : IComparable
+    {
+        
     }
 }

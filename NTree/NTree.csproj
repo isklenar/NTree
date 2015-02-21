@@ -39,17 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryTree\AVLTree\AVLNode.cs" />
     <Compile Include="BinaryTree\AVLTree\AVLTree.cs" />
     <Compile Include="BinaryTree\BinarySearchTree\BinarySearchTree.cs" />
     <Compile Include="BinaryTree\BSTInOrderEnumerator.cs" />
     <Compile Include="BinaryTree\BinaryTree.cs" />
-    <Compile Include="BinaryTree\BinarySearchTree\BSTNode.cs" />
     <Compile Include="BinaryTree\BTNode.cs" />
+    <Compile Include="Common\KeyValueNode.cs" />
     <Compile Include="Common\ReadOnlyTree.cs" />
     <Compile Include="Common\Tree.cs" />
     <Compile Include="NTree.cs" />
-    <Compile Include="PriorityQueue\PQItem.cs" />
     <Compile Include="PriorityQueue\PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

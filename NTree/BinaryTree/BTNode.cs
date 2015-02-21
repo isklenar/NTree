@@ -4,9 +4,13 @@ using NTree.Common;
 
 namespace NTree.BinaryTree
 {
-    public abstract class BTNode<T>
+    /// <summary>
+    /// Node in binary tree.
+    /// </summary>
+    /// <typeparam name="T">type implementing IComparable</typeparam>
+    public class BTNode<T> where T : IComparable
     {
-        protected BTNode(IComparable item)
+        public BTNode(IComparable item)
         {
             Element = item;
         }
@@ -16,8 +20,7 @@ namespace NTree.BinaryTree
         public BTNode<T> Parent { get; set; }
         public BTNode<T> Right { get; set; }
         public BTNode<T> Left { get; set; } 
-  
-
+ 
     }
 
 }

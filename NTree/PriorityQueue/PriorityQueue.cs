@@ -4,13 +4,24 @@ using NTree.Common;
 
 namespace NTree.PriorityQueue
 {
+    /// <summary>
+    /// PriorityQueue implemented as min binary heap, meaning that the smallest element is at the top.
+    /// </summary>
+    /// <typeparam name="V">type implementing IComparable</typeparam>
     public class PriorityQueue<V> where V : IComparable
     {
         private int _heapSize = 0;
         private V [] _heap = new V[10];
-
+        
+        /// <summary>
+        /// Returns number of elements in heap.
+        /// </summary>
         public int HeapSize { get { return _heapSize; } }
 
+        /// <summary>
+        /// Adds element to heap.
+        /// </summary>
+        /// <param name="value">value to add</param>
         public void Add(V value)
         {
             _heapSize++;
@@ -27,31 +38,43 @@ namespace NTree.PriorityQueue
             _heap[current] = value;
         }
 
+        /// <summary>
+        /// Returns, but does not remove, top element from heap.
+        /// </summary>
+        /// <returns>top element, default(V) if heap is empty</returns>
         public V PeekTop()
         {
             if (_heapSize == 0)
             {
-                throw new InvalidOperationException("Heap is empty");
+                return default(V);
             }
 
             return _heap[1];
         }
 
+        /// <summary>
+        /// Returns and replaces top element in heap.
+        /// </summary>
+        /// <returns>top element, default(V) if heap is empty</returns>
         public V ExtractTop()
         {
             if (_heapSize == 0)
             {
-                throw new InvalidOperationException("Heap is empty");
+                return default(V);
             }
 
-            V max = _heap[1];
+            V min = _heap[1];
             _heap[1] = _heap[_heapSize];
             _heapSize--;
             Heapify(1);
 
-            return max;
+            return min;
         }
 
+        /// <summary>
+        /// Heapifies heap.
+        /// </summary>
+        /// <param name="i">index of node to heapify</param>
         private void Heapify(int i)
         {
             int left = 2 * i;
@@ -78,6 +101,9 @@ namespace NTree.PriorityQueue
             }
         }
 
+        /// <summary>
+        /// Resizes heap.
+        /// </summary>
         private void ResizeHeap()
         {
             V [] newHeap = new V[_heap.Length * 2];
@@ -86,6 +112,11 @@ namespace NTree.PriorityQueue
         }
     }
 
+    /// <summary>
+    /// Priority key-value queue, implemented as min binary heap.
+    /// </summary>
+    /// <typeparam name="K">Key, implementing IComparable interface</typeparam>
+    /// <typeparam name="V">Value</typeparam>
     public class PriorityQueue<K,V> where K : IComparable
     {
         private PriorityQueue<KeyValueNode<K, V>> _priorityQueue;
