@@ -46,6 +46,11 @@ namespace NTree.BinaryTree.AVLTree
             
         }
 
+        /// <summary>
+        /// Balances AVL node by performing rotations.
+        /// </summary>
+        /// <param name="node">node to balance</param>
+        /// <param name="balance">balance factor of node</param>
         private void AVLBalanceNode(BTNode<T> node, int balance)
         {
             if (balance == 2)
