@@ -206,7 +206,6 @@ namespace NTree.BinaryTree.AVLTree
         /// <param name="node">node to rotate</param>
         private void RotateLeftLeft(BTNode<T> node)
         {
-            bool isRoot = ReferenceEquals(Root, node);
             if (node == null)
             {
                 return;
@@ -216,6 +215,10 @@ namespace NTree.BinaryTree.AVLTree
             {
                 return;
             }
+
+            bool isRoot = ReferenceEquals(Root, node);
+            BTNode<T> oldParent = node.Parent;
+
             node.Left = tmp.Right;
             if (node.Left != null)
             {
@@ -228,6 +231,17 @@ namespace NTree.BinaryTree.AVLTree
             {
                 Root = tmp;
             }
+            else
+            {
+                if (ReferenceEquals(oldParent.Left, node))
+                {
+                    oldParent.Left = tmp;
+                }
+                else if (ReferenceEquals(oldParent.Right, node))
+                {
+                    oldParent.Right = tmp;
+                }
+            }
         }
 
         /// <summary>
@@ -236,7 +250,6 @@ namespace NTree.BinaryTree.AVLTree
         /// <param name="node">node to rotate</param>
         private void RotateRightRight(BTNode<T> node)
         {
-            bool isRoot = ReferenceEquals(Root, node);
             if (node == null)
             {
                 return;
@@ -246,6 +259,10 @@ namespace NTree.BinaryTree.AVLTree
             {
                 return;
             }
+
+            bool isRoot = ReferenceEquals(Root, node);
+            BTNode<T> oldParent = node.Parent;
+
             node.Right = tmp.Left;
             if (node.Right != null)
             {
@@ -258,6 +275,17 @@ namespace NTree.BinaryTree.AVLTree
             if (isRoot)
             {
                 Root = tmp;
+            }
+            else
+            {
+                if (ReferenceEquals(oldParent.Left, node))
+                {
+                    oldParent.Left = tmp;
+                }
+                else if (ReferenceEquals(oldParent.Right, node))
+                {
+                    oldParent.Right = tmp;
+                }
             }
         }
 
@@ -304,6 +332,7 @@ namespace NTree.BinaryTree.AVLTree
             return FindElement(item).Element;
         }
     }
+
     /// <summary>
     /// Key-Value version of self-balancing AVL tree.
     /// </summary>
