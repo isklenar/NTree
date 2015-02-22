@@ -158,14 +158,14 @@ namespace NTree.Test.BinarySearchTree
             _tree.Add(new TestElement(100));
             _tree.Add(new TestElement(5));
 
-            //_tree.Remove(new TestElement(1)); //this should force AVL rotation
-            //Assert.IsFalse(_tree.Contains(new TestElement(1)));
+            _tree.Remove(new TestElement(6));
+            Assert.IsFalse(_tree.Contains(new TestElement(6)));
             Assert.IsTrue(_tree.Contains(new TestElement(4)));
             Assert.IsTrue(_tree.Contains(new TestElement(2)));
             Assert.IsTrue(_tree.Contains(new TestElement(7)));
             Assert.IsTrue(_tree.Contains(new TestElement(8)));
             Assert.IsTrue(_tree.Contains(new TestElement(100)));
-            Assert.AreEqual(9, _tree.Count);
+            Assert.AreEqual(8, _tree.Count);
         }
 
         /*

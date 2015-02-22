@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace NTree.Test.BinarySearchTree
 {
-    [TestFixture]
+    
     class AVLTreeTest : BinaryTreeTestBase
     {
         [SetUp]

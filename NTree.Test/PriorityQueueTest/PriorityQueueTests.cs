@@ -44,6 +44,31 @@ namespace NTree.Test.PriorityQueueTest
             Assert.AreEqual(111, _queue.ExtractTop().Id);
             Assert.AreEqual(123, _queue.ExtractTop().Id);
         }
+
+        [Test]
+        public void InsertAndExtractTest([Range(0, 100000, 20000)] int n)
+        {
+            int [] priorities = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                priorities[i] = i;
+            }
+           
+            TestElement[] elements = new TestElement[n];
+            priorities = priorities.OrderBy(u => (new Random()).Next()).ToArray();
+            int j = 0;
+            foreach (var priority in priorities)
+            {
+                elements[j] = new TestElement(priority * 2); 
+                _queue.Add(priority, elements[j++]);
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                Assert.IsTrue(_queue.PeekTop().Id == (i * 2));
+                _queue.ExtractTop();
+            }
+        }
     }
 
     [TestFixture]
@@ -80,6 +105,34 @@ namespace NTree.Test.PriorityQueueTest
             Assert.AreEqual(100, _queue.ExtractTop().Id);
             Assert.AreEqual(111, _queue.ExtractTop().Id);
             Assert.AreEqual(123, _queue.ExtractTop().Id);
+        }
+
+        [Test]
+        public void InsertAndExtractTest([Range(0, 100000, 20000)] int n)
+        {
+            int[] priorities = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                priorities[i] = i;
+            }
+
+            TestElement[] elements = new TestElement[n];
+            for (int i = 0; i < n; i++)
+            {
+                elements[i] = new TestElement(i * 2);
+            }
+            elements = elements.OrderBy(u => (new Random()).Next()).ToArray();
+            int j = 0;
+            foreach (var element in elements)
+            {
+                _queue.Add(element);
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                Assert.IsTrue(_queue.PeekTop().Id == (i * 2));
+                _queue.ExtractTop();
+            }
         }
     }
 }

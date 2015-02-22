@@ -192,6 +192,23 @@ namespace NTree.BinaryTree.RBTree
             }
         }
 
+        private RBNode<T> Sibling(RBNode<T> node)
+        {
+            if (node.Parent == null)
+            {
+                return null;
+            }
+
+            if (ReferenceEquals(node.Parent.Left, node))
+            {
+                return (RBNode<T>) node.Parent.Right;
+            }
+            else
+            {
+                return (RBNode<T>) node.Parent.Left;
+            }
+        } 
+
         private RBNode<T> Grandparent(RBNode<T> node)
         {
             if (node != null && node.Parent != null)
