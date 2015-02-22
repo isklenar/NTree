@@ -44,6 +44,8 @@
     <Compile Include="BinaryTree\BSTInOrderEnumerator.cs" />
     <Compile Include="BinaryTree\BinaryTree.cs" />
     <Compile Include="BinaryTree\BTNode.cs" />
+    <Compile Include="BinaryTree\RBTree\RBNode.cs" />
+    <Compile Include="BinaryTree\RBTree\RBTree.cs" />
     <Compile Include="Common\KeyValueNode.cs" />
     <Compile Include="Common\ReadOnlyTree.cs" />
     <Compile Include="Common\Tree.cs" />

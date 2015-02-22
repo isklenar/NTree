@@ -11,12 +11,8 @@ namespace NTree.BinaryTree
         protected bool ReadOnly;
         internal BTNode<T> Root { get; set; }
 
-        protected BTNode<T> InnerAdd(T item)
+        protected BTNode<T> InnerAdd(BTNode<T> item)
         {
-            if (Contains(item))
-            {
-                return null;
-            }
 
             var currentNode = Root;
             BTNode<T> prevNode = null;
@@ -25,7 +21,7 @@ namespace NTree.BinaryTree
             while (currentNode != null)
             {
                 prevNode = currentNode;
-                int comparison = item.CompareTo(currentNode.Element);
+                int comparison = item.Element.CompareTo(currentNode.Element);
                 if (comparison < 0)
                 {
                     currentNode = currentNode.Left;
@@ -36,8 +32,12 @@ namespace NTree.BinaryTree
                     currentNode = currentNode.Right;
                     left = false;
                 }
+                if (comparison == 0)
+                {
+                    return null;
+                }
             }
-            currentNode = new BTNode<T>(item);
+            currentNode = item;
             if (Root == null)
             {
                 Root = currentNode;

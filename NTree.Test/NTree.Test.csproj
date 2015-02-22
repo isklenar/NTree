@@ -57,6 +57,7 @@
     <Compile Include="BinarySearchTree\BinarySearchTreeTest.cs" />
     <Compile Include="BinarySearchTree\BinaryTreeTestBase.cs" />
     <Compile Include="BinarySearchTree\KeyValueTrees\KeyValueTreesTestBase.cs" />
+    <Compile Include="BinarySearchTree\RBTreeTest.cs" />
     <Compile Include="PriorityQueueTest\PriorityQueueTests.cs" />
     <Compile Include="TestElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

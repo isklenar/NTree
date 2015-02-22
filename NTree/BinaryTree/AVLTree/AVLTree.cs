@@ -27,7 +27,7 @@ namespace NTree.BinaryTree.AVLTree
         /// <param name="item">item to add</param>
         public override void Add(T item)
         {
-            var node = InnerAdd(item);
+            var node = InnerAdd(new BTNode<T>(item));
             if (node == null)
             {
                 return;

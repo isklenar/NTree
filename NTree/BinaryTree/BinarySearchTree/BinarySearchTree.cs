@@ -10,7 +10,7 @@ namespace NTree.BinaryTree.BinarySearchTree
     {
         public override void Add(T item)
         {
-            InnerAdd(item);
+            InnerAdd(new BTNode<T>(item));
         }
 
         public override bool Remove(T item)
