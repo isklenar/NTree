@@ -10,12 +10,10 @@ namespace NTree.Common
     public class ReadOnlyTree<T> : IReadOnlyCollection<T> where T : IComparable
     {
         private Tree<T> _tree;
-        private bool _readOnly;
 
         public ReadOnlyTree(Tree<T> tree)
         {
             _tree = tree;
-            _readOnly = true;
         }
 
         public IEnumerator<T> GetEnumerator()

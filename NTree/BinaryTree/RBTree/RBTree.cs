@@ -23,6 +23,21 @@ namespace NTree.BinaryTree.RBTree
 
         public override bool Remove(T item)
         {
+            RBNode<T> node = (RBNode<T>) FindElement(item);
+            if (node == null)
+            {
+                return false;
+            }
+
+            node = (RBNode<T>) RemoveNode(node);
+
+            DeleteCase1(node);
+
+            return true;
+        }
+
+        private void DeleteCase1(RBNode<T> node)
+        {
             throw new NotImplementedException();
         }
 
