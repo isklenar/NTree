@@ -19,7 +19,12 @@ namespace NTree.BinaryTree.BinarySearchTree
             {
                 throw new NotSupportedException("Tree is read only");
             }
-            return RemoveNode(item) != null;           
+            if (RemoveNode(FindElement(item)) != null)
+            {
+                _count--;
+                return true;
+            }
+            return false;         
         }
 
         internal IComparable GetItem(T item)

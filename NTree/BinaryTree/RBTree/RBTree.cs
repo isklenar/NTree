@@ -30,7 +30,6 @@ namespace NTree.BinaryTree.RBTree
             if (node.Parent == null)
             {
                 node.Colour = Colour.Black;
-                
             }
             else
             {

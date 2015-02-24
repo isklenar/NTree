@@ -6,7 +6,7 @@ using NTree.Common;
 
 namespace NTree.BinaryTree.AVLTree
 {
-    /// <summary>
+   /* /// <summary>
     /// Self-balancing binary search tree.
     /// Guarantees O(log(n)) insert, remove and search by performing balancing operations.
     /// </summary>
@@ -189,7 +189,7 @@ namespace NTree.BinaryTree.AVLTree
 
             root.Height = NodeHeight(root);
             return root;
-        }*/
+        }
 
         /// <summary>
         /// Determines height of node.
@@ -409,5 +409,5 @@ namespace NTree.BinaryTree.AVLTree
 
         public override int Count { get { return _tree.Count; } }
         public override bool IsReadOnly { get { return _tree.IsReadOnly; } }
-    }
+    }*/
 }

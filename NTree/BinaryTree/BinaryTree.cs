@@ -121,34 +121,30 @@ namespace NTree.BinaryTree
         /// <summary>
         /// Removes node from tree and returns it.
         /// </summary>
-        /// <param name="item">element to remove</param>
+        /// <param name="node">element to remove</param>
         /// <returns>Node detached from tree, null if not found</returns>
-        protected BTNode<T> RemoveNode(T item)
+        protected BTNode<T> RemoveNode(BTNode<T> node)
         {
-            var nodeToRemove = FindElement(item);
-            if (nodeToRemove == null)
+            if (node == null)
             {
                 //not found, can't remove
                 return null;
             }
             //does not have children
-            if (nodeToRemove.Left == null && nodeToRemove.Right == null)
+            if (node.Left == null && node.Right == null)
             {
-                RemoveChildlessNode(nodeToRemove);
+                RemoveChildlessNode(node);
             }
-            else if (nodeToRemove.Left == null ^ nodeToRemove.Right == null) // has one child
+            else if (node.Left == null ^ node.Right == null) // has one child
             {
-                RemoveOneChildNode(nodeToRemove);
+                RemoveOneChildNode(node);
             }
             else //has both children
             {
-                RemoveTwoChildrenNode(nodeToRemove);
+                RemoveTwoChildrenNode(node);
             }
 
-
-            _count--;
-
-            return nodeToRemove;
+            return node;
         }
 
         /// <summary>
@@ -240,7 +236,9 @@ namespace NTree.BinaryTree
         {
             //find min node in right subtree, which will be replacement for current one
             var replacement = FindMinInSubtree(node.Right);
-
+            node.Element = replacement.Element;
+            RemoveNode(replacement);
+            /*
             //replacement is right child of node we are removing
             //since it's min value, it only has right child
             //with elements larger than itself
@@ -269,13 +267,13 @@ namespace NTree.BinaryTree
                     replacement.Parent.Left = replacement.Right;
                     replacement.Right.Parent = replacement.Parent;
                 }
-            }
+            }*/
         }
 
         /// <summary>
         /// Finds element in tree.
         /// </summary>
-        /// <param name="item">item to find</param>
+        /// <param name="item">node to find</param>
         /// <returns>node containing element, null if not found</returns>
         protected BTNode<T> FindElement(T item)
         {

@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NTree.BinaryTree.AVLTree;
+
 using NUnit.Framework;
 
 namespace NTree.Test.BinarySearchTree
 {
-    
+    /*
     class AVLTreeTest : BinaryTreeTestBase
     {
         [SetUp]
         public void Initialize()
         {
-            _tree = new AVLTree<TestElement>();
+            //_tree = new AVLTree<TestElement>();
         }
     
         [Test]
@@ -43,5 +43,5 @@ namespace NTree.Test.BinarySearchTree
             _tree.Add(new TestElement(4));
             _tree.Add(new TestElement(5));
         }
-    }
+    }*/
 }
