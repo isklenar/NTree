@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using NTree.Common;
 
 namespace NTree.BinaryTree.RBTree
 {
@@ -233,5 +235,13 @@ namespace NTree.BinaryTree.RBTree
 
             return null;
         } 
+    }
+
+    public class RBTree<K, V> : BinaryTree<K, V> where K : IComparable
+    {
+        public RBTree()
+        {
+            _tree = new RBTree<KeyValueNode<K, V>>();
+        }
     }
 }

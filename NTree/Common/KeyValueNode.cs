@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NTree.Common
 {
-    internal class KeyValueNode<K, V> : IComparable where K : IComparable
+    public class KeyValueNode<K, V> : IComparable where K : IComparable
     {
         public K Key { get; set; }
         public V Value { get; set; }
