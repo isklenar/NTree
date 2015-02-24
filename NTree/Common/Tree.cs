@@ -10,6 +10,7 @@ namespace NTree.Common
     public abstract class Tree<T> : ICollection<T> where T : IComparable
     {
         public abstract IEnumerator<T> GetEnumerator();
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
@@ -27,11 +28,17 @@ namespace NTree.Common
         {
             return new ReadOnlyTree<T>(this);
         }
+
+        public ConcurrentTree<T> AsConcurrentTree()
+        {
+            return new ConcurrentTree<T>(this);
+        }
     }
 
     public abstract class Tree<K, V> : IEnumerable where K : IComparable
     {
         public abstract IEnumerator<V> GetEnumerator();
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

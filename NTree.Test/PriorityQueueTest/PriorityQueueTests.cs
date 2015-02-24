@@ -122,7 +122,7 @@ namespace NTree.Test.PriorityQueueTest
                 elements[i] = new TestElement(i * 2);
             }
             elements = elements.OrderBy(u => (new Random()).Next()).ToArray();
-            int j = 0;
+            
             foreach (var element in elements)
             {
                 _queue.Add(element);

@@ -401,5 +401,36 @@ namespace NTree.Test.BinarySearchTree
                 Assert.IsTrue(_tree.Contains(numbers[i]));
             }
         }
+        [Test]
+        public void RemoveThenAddTest([Range(40000, 200000, 40000)] int n)
+        {
+            TestElement[] numbers = new TestElement[n];
+            var random = new Random();
+            for (int i = 0; i < n; i++)
+            {
+                numbers[i] = new TestElement(random.Next());
+                _tree.Add(numbers[i]);
+            }
+
+            numbers = numbers.Distinct().ToArray();
+
+            var toRemove = numbers.Take(n/2);
+            foreach (var item in toRemove)
+            {
+                _tree.Remove(item);
+            }
+
+            var addedItems = new TestElement[n/2];
+            
+            for (int i = 0; i < n/2; i++)
+            {
+                addedItems[i] = new TestElement(random.Next());
+                _tree.Add(addedItems[i]);
+            }
+            var shouldContain = numbers.Except(toRemove).Union(addedItems).OrderBy(u => u.Id).ToList();
+            Assert.AreEqual(shouldContain.Count, _tree.Count);
+            CollectionAssert.AreEqual(shouldContain, _tree);
+
+        }
     }
 }
