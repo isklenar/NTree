@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace NTree.Test.BinarySearchTree
 {
     /*
-    class AVLTreeTest : BinaryTreeTestBase
+    class AVLTreeTest : TreeTestBase
     {
         [SetUp]
         public void Initialize()

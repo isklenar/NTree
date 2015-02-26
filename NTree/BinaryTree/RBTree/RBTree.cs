@@ -121,7 +121,7 @@ namespace NTree.BinaryTree.RBTree
         }
 
         /// <summary>
-        /// Performs single right rotation over a node.
+        /// Performs single left rotation over a node.
         /// </summary>
         /// <param name="node">node to rotate</param>
         private void RotateLeft(BTNode<T> node)
@@ -138,7 +138,6 @@ namespace NTree.BinaryTree.RBTree
 
             BTNode<T> oldParent = node.Parent;
             bool wasRoot = ReferenceEquals(node, Root);
-
             node.Right = tmp.Left;
             if (node.Right != null)
             {
@@ -167,6 +166,10 @@ namespace NTree.BinaryTree.RBTree
 
         }
 
+        /// <summary>
+        /// Performs single right rotation over a node.
+        /// </summary>
+        /// <param name="node">node to rotate</param>
         private void RotateRight(BTNode<T> node)
         {
             if (node == null)
@@ -249,7 +252,27 @@ namespace NTree.BinaryTree.RBTree
             }
 
             return null;
-        } 
+        }
+
+        private bool IsRed(RBNode<T> node)
+        {
+            if (node == null)
+            {
+                return false;
+            }
+
+            return node.Colour == Colour.Red;
+        }
+
+        private bool IsBlack(RBNode<T> node)
+        {
+            if (node == null)
+            {
+                return false;
+            }
+
+            return node.Colour == Colour.Black;
+        }
     }
 
     public class RBTree<K, V> : BinaryTree<K, V> where K : IComparable

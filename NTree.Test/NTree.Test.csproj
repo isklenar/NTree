@@ -53,14 +53,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BinarySearchTree\AVLTreeTest.cs" />
-    <Compile Include="BinarySearchTree\BinarySearchTreeTest.cs" />
-    <Compile Include="BinarySearchTree\BinaryTreeTestBase.cs" />
-    <Compile Include="BinarySearchTree\ConcurrentTree\ConcurrentTreeTests.cs" />
-    <Compile Include="BinarySearchTree\KeyValueTrees\BinaryKeyValueTreeTest.cs" />
-    <Compile Include="BinarySearchTree\KeyValueTrees\RBKeyValueTreeTest.cs" />
-    <Compile Include="BinarySearchTree\KeyValueTrees\KeyValueTreesTestBase.cs" />
-    <Compile Include="BinarySearchTree\RBTreeTest.cs" />
+    <Compile Include="BinarySearchTreeTest\AVLTreeTest.cs" />
+    <Compile Include="BinarySearchTreeTest\SearchTreeTest.cs" />
+    <Compile Include="BTreeTest\BTreeTests.cs" />
+    <Compile Include="TreeTestBase.cs" />
+    <Compile Include="BinarySearchTreeTest\ConcurrentTree\ConcurrentTreeTests.cs" />
+    <Compile Include="BinarySearchTreeTest\KeyValueTrees\BinaryKeyValueTreeTest.cs" />
+    <Compile Include="BinarySearchTreeTest\KeyValueTrees\RBKeyValueTreeTest.cs" />
+    <Compile Include="BinarySearchTreeTest\KeyValueTrees\KeyValueTreesTestBase.cs" />
+    <Compile Include="BinarySearchTreeTest\RBTreeTest.cs" />
     <Compile Include="PriorityQueueTest\PriorityQueueTests.cs" />
     <Compile Include="TestElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

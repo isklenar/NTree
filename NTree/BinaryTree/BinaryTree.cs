@@ -12,9 +12,15 @@ namespace NTree.BinaryTree
         protected bool ReadOnly;
         internal BTNode<T> Root { get; set; }
 
-        protected BTNode<T> InnerAdd(BTNode<T> item)
+        /// <summary>
+        /// Adds node to tree, using standard BST insert algorithm.
+        /// 
+        /// Returns null if element in node already exists in tree.
+        /// </summary>
+        /// <param name="node">node to add</param>
+        /// <returns>added node, null if element exists</returns>
+        protected BTNode<T> InnerAdd(BTNode<T> node)
         {
-
             var currentNode = Root;
             BTNode<T> prevNode = null;
             bool left = false;
@@ -22,7 +28,7 @@ namespace NTree.BinaryTree
             while (currentNode != null)
             {
                 prevNode = currentNode;
-                int comparison = item.Element.CompareTo(currentNode.Element);
+                int comparison = node.Element.CompareTo(currentNode.Element);
                 if (comparison < 0)
                 {
                     currentNode = currentNode.Left;
@@ -38,7 +44,7 @@ namespace NTree.BinaryTree
                     return null;
                 }
             }
-            currentNode = item;
+            currentNode = node;
             if (Root == null)
             {
                 Root = currentNode;
@@ -123,7 +129,7 @@ namespace NTree.BinaryTree
         /// Removes node from tree and returns it.
         /// </summary>
         /// <param name="node">element to remove</param>
-        /// <returns>Node detached from tree, null if not found</returns>
+        /// <returns>Removed node detached from tree, null if not found</returns>
         protected BTNode<T> RemoveNode(BTNode<T> node)
         {
             if (node == null)
@@ -239,36 +245,6 @@ namespace NTree.BinaryTree
             var replacement = FindMinInSubtree(node.Right);
             node.Element = replacement.Element;
             RemoveNode(replacement);
-            /*
-            //replacement is right child of node we are removing
-            //since it's min value, it only has right child
-            //with elements larger than itself
-            if (replacement.Parent.Element.CompareTo(node.Element) == 0)
-            {
-                //just "push" replacement one layer up
-                node.Element = replacement.Element;
-                node.Right = replacement.Right;
-                if (replacement.Right != null)
-                {
-                    replacement.Right.Parent = node;
-                }
-            }
-            else
-            // replacement is nested deeper, there is atleast one node between replacement and node <=> replacement.Parent != node
-            {
-                node.Element = replacement.Element;
-                if (replacement.Left == null && replacement.Right == null)
-                {
-                    //replacement is min node, has to be left child
-                    replacement.Parent.Left = null;
-                }
-                else //can only have right child
-                {
-                    //add right child as a left child of parent
-                    replacement.Parent.Left = replacement.Right;
-                    replacement.Right.Parent = replacement.Parent;
-                }
-            }*/
         }
 
         /// <summary>
@@ -335,7 +311,7 @@ namespace NTree.BinaryTree
             KeyValueNode<K, V>[] items = new KeyValueNode<K, V>[_tree.Count];
             _tree.CopyTo(items, 0);
 
-            var values = items.Select(u => u.Value).ToList();
+            var values = items.Select(u => u.Value).ToList(); //select just values
             return values.GetEnumerator();
         }
         IEnumerator IEnumerable.GetEnumerator()

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NTree.Test.BinarySearchTree;
 using NUnit.Framework;
 
-namespace NTree.Test.BinarySearchTree
+namespace NTree.Test
 {
-    public abstract class BinaryTreeTestBase{
+    public abstract class TreeTestBase{
 
         protected ICollection<TestElement> _tree;
 

@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using NTree.BinaryTree.BinarySearchTree;
+using System.Text;
+using System.Threading.Tasks;
+using NTree.BinaryTree.RBTree;
 using NUnit.Framework;
 
 namespace NTree.Test.BinarySearchTree
 {
     [TestFixture]
-    public class BinarySearchTreeTest : BinaryTreeTestBase
+    public class RBTreeTest : TreeTestBase
     {
         [SetUp]
         public void Initialize()
         {
-            _tree = new BinarySearchTree<TestElement>();
-        }        
+            _tree = new RBTree<TestElement>();
+        }
     }
 }
