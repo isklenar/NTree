@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NTree.BinaryTree.BinarySearchTree;
+﻿using System.Threading.Tasks;
 using NTree.BinaryTree.RBTree;
 using NTree.Common;
+using NTree.Test.BinarySearchTree;
 using NUnit.Framework;
 
-namespace NTree.Test.BinarySearchTree.ConcurrentTree
+namespace NTree.Test.BinarySearchTreeTest.ConcurrentTree
 {
     [TestFixture]
     public class ConcurrentTreeTests

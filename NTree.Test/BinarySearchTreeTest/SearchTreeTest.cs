@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using NTree.BinaryTree.BinarySearchTree;
+﻿using NTree.BinaryTree.BinarySearchTree;
+using NTree.Test.BinarySearchTree;
 using NUnit.Framework;
 
-namespace NTree.Test.BinarySearchTree
+namespace NTree.Test.BinarySearchTreeTest
 {
     [TestFixture]
     public class SearchTreeTest : TreeTestBase
