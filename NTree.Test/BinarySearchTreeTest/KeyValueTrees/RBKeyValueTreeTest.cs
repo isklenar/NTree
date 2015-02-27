@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NTree.BinaryTree.RBTree;
+﻿using NTree.BinaryTree.RBTree;
 using NUnit.Framework;
 
-namespace NTree.Test.BinarySearchTree.KeyValueTrees
+namespace NTree.Test.BinarySearchTreeTest.KeyValueTrees
 {
     [TestFixture]
     public class RBKeyValueTreeTest : KeyValueTreesTestBase

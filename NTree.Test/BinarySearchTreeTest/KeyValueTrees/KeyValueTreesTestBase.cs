@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using NTree.Common;
-using NTree.Test.BinarySearchTree;
 using NUnit.Framework;
 
 namespace NTree.Test.BinarySearchTreeTest.KeyValueTrees

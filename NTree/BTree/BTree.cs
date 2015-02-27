@@ -15,9 +15,20 @@ namespace NTree.BTree
 
         private int _order;
 
+        private const int DefaultOrder = 4;
+
         public BTree(int order)
         {
             _order = order;
+        }
+
+        /// <summary>
+        /// Creates new BTree with default order = 4.
+        /// </summary>
+        public BTree()
+            :this(DefaultOrder)
+        {
+            
         }
 
         public override IEnumerator<T> GetEnumerator()

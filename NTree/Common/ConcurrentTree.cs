@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NTree.Common
@@ -9,7 +10,9 @@ namespace NTree.Common
     public class ConcurrentTree<T> : Tree<T> where T : IComparable
     {
         private readonly Tree<T> _tree;
-        private readonly object _lock = new object();
+        //private readonly object _lock = new object();
+
+        private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
 
         internal ConcurrentTree(Tree<T> tree)
         {
@@ -27,63 +30,50 @@ namespace NTree.Common
 
         public override void Add(T item)
         {
-            lock (_lock)
-            {
-                _tree.Add(item);
-            }
+            _lock.EnterWriteLock();
+            _tree.Add(item);
+            _lock.ExitWriteLock();
         }
 
         public override void Clear()
         {
-            lock (_lock)
-            {
-                _tree.Clear();
-            }
+            _lock.EnterWriteLock();
+            _tree.Clear();
+            _lock.ExitWriteLock();
         }
 
         public override bool Contains(T item)
         {
-            lock (_lock)
-            {
-                return _tree.Contains(item);
-            }
+            _lock.EnterReadLock();
+            bool result = _tree.Contains(item);
+            _lock.ExitReadLock();
+            return result;
         }
 
         public override void CopyTo(T[] array, int arrayIndex)
         {
-            lock (_lock)
-            {
-                _tree.CopyTo(array, arrayIndex);
-            }
+            _lock.EnterReadLock();
+            _tree.CopyTo(array, arrayIndex);
+            _lock.ExitReadLock();
         }
 
         public override bool Remove(T item)
         {
-            lock (_lock)
-            {
-                return _tree.Remove(item);
-            }
+            _lock.EnterWriteLock();
+            bool result = _tree.Remove(item);
+            _lock.ExitWriteLock();
+
+            return result;
         }
 
         public override int Count
         {
-            get {
-                    lock (_lock)
-                    {
-                        return _tree.Count;
-                    }
-                }
+            get { return _tree.Count; }
         }
 
         public override bool IsReadOnly
         {
-            get
-            {
-                lock (_lock)
-                {
-                    return _tree.IsReadOnly;
-                }
-            }
+            get { return _tree.IsReadOnly; }
         }
     }
 }

@@ -29,16 +29,107 @@ namespace NTree.BinaryTree.RBTree
                 return false;
             }
 
-            node = (RBNode<T>) RemoveNode(node);
-
-            DeleteCase1(node);
+            RBDelete(node);
 
             return true;
         }
 
-        private void DeleteCase1(RBNode<T> node)
+        private void RBDelete(RBNode<T> node)
         {
-            throw new NotImplementedException();
+            RBNode<T> currentNode;
+            if (node.Left == null || node.Right == null)
+            {
+                currentNode = node;
+            }
+            else
+            {
+                currentNode = (RBNode<T>) FindMinInSubtree(node.Right); //successor
+            }
+            RBNode<T> tmp;
+            if (currentNode.Left != null)
+            {
+                tmp = (RBNode<T>) currentNode.Left;
+            }
+            else
+            {
+                tmp = (RBNode<T>) currentNode.Right;
+            }
+            RBNode<T> tmpParent = (RBNode<T>) currentNode.Parent;
+            bool left = false;
+            if (currentNode.Parent == null)
+            {
+                Root = tmp;
+            }
+            else if (ReferenceEquals(currentNode, currentNode.Parent.Left))
+            {
+                currentNode.Parent.Left = tmp;
+                left = true;
+            }
+            else
+            {
+                currentNode.Parent.Right = tmp;
+            }
+
+            if (!ReferenceEquals(currentNode, node))
+            {
+                node.Element = currentNode.Element;
+            }
+
+            if (!IsRed(currentNode))
+            {
+                RBDeleteFixUp(tmp, tmpParent, left);
+            }
+        }
+
+        private void RBDeleteFixUp(RBNode<T> node, RBNode<T> parent, bool left)
+        {
+            while (!ReferenceEquals(node, Root) && IsBlack(node))
+            {
+                RBNode<T> tmp;
+                if (left)
+                {
+                    tmp = (RBNode<T>) parent.Right;
+                    if (IsRed(tmp))
+                    {
+                        tmp.Colour = Colour.Black;
+                        parent.Colour = Colour.Red;
+                        RotateLeft(parent);
+                        tmp = (RBNode<T>) parent.Left;
+                    }
+
+                    if (IsBlack(tmp.Left) && IsBlack(tmp.Right))
+                    {
+                        tmp.Colour = Colour.Red;
+                        node = parent;
+                        parent = (RBNode<T>) node.Parent;
+                        left = ReferenceEquals(node, parent.Left);
+                    }
+                    else
+                    {
+                        if (IsBlack(tmp.Right))
+                        {
+                            ((RBNode<T>) tmp.Left).Colour = Colour.Black;
+                            tmp.Colour = Colour.Red;
+                            RotateRight(tmp);
+                            tmp = (RBNode<T>) parent.Right;
+                        }
+
+                        tmp.Colour = parent.Colour;
+                        parent.Colour = Colour.Black;
+                        if (tmp.Right != null)
+                        {
+                            ((RBNode<T>) tmp.Right).Colour = Colour.Black;
+                        }
+                        RotateLeft(parent);
+                        node = (RBNode<T>) Root;
+                        parent = null;
+                    }
+                }
+                else
+                {
+                    
+                }
+            }
         }
 
 
@@ -254,24 +345,24 @@ namespace NTree.BinaryTree.RBTree
             return null;
         }
 
-        private bool IsRed(RBNode<T> node)
+        private bool IsRed(BTNode<T> node)
         {
             if (node == null)
             {
                 return false;
             }
-
-            return node.Colour == Colour.Red;
+            RBNode<T> tmp = (RBNode<T>)node;
+            return tmp.Colour == Colour.Red;
         }
 
-        private bool IsBlack(RBNode<T> node)
+        private bool IsBlack(BTNode<T> node)
         {
             if (node == null)
             {
                 return false;
             }
-
-            return node.Colour == Colour.Black;
+            RBNode<T> tmp = (RBNode<T>) node;
+            return tmp.Colour == Colour.Black;
         }
     }
 
