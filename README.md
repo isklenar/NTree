@@ -1,4 +1,4 @@
-# NTree [![Build Status](https://travis-ci.org/isklenar/NTree.svg)](https://travis-ci.org/isklenar/NTree)
+# NTree
 C# library that provides implementation of several tree data structures.
 
 Currently implemented structures:
