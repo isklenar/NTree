@@ -7,6 +7,9 @@ Currently implemented structures:
 * Priority queue (min-heap)
 * B-Tree (WIP)
 
+## Usage
+Documented on wiki: [Usage](https://github.com/isklenar/NTree/wiki/Usage)
+
 ## Contributing
 You are free to submit pull requests. If you want to contribute more than just by pull requests, send me message and we can work something out.
 
