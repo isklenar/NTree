@@ -1,9 +1,18 @@
 # NTree
-C# library that provides implementation of several tree data structures
+C# library that provides implementation of several tree data structures.
 
-Time complexities:
+Currently implemented structures:
+* Unbalanced binary search tree
+* Balanced binary search tree (Red-Black tree) (WIP)
+* Priority queue (min-heap)
+* B-Tree (WIP)
 
-| Type of tree  | Insert | Remove | Contains | GetEnumerable | Move enumerable |
-| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
-| Unbalanced binary tree  | O(log(n)), O(n) worst case  | O(log(n)), O(n) worst case | O(log(n)), O(n) worst case | O(log(n)), O(n) worst case | O(1), O(log(n)) worst case |
-| AVL Tree  | O(log(n))  | O(log(n))  | O(log(n))  | O(log(n))  | O(1), O(log(n)) worst case  |
+## Contributing
+You are free to submit pull requests. If you want to contribute more than just by pull requests, send me message and we can work something out.
+
+If you submit pull request, make sure all unit tests pass. Similary, if you add a new feature, write tests for it. I'm aiming for high unit test coverage (>90%), so please try and do the same.
+
+Add comments to your code. Comment public methods and members and non self-explanatory private methods and members.
+
+## Issues
+If you come across issue, you can report it here on github. Please provide clear and concise description of the problem. "I ran it and it crashed" is not a good bug report.
