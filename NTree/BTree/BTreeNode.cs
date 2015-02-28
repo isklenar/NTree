@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NTree.BTree
 {
-    class BTreeNode<T> where T : IComparable
+    internal class BTreeNode<T> where T : IComparable
     {
         public BTreeNode<T> Parent { get; set; }
         public BTreeNode<T>[] Children { get; set; }

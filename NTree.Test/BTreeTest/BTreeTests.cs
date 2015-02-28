@@ -24,7 +24,7 @@ namespace NTree.Test.BTreeTest
         [SetUp]
         public void Initialize()
         {
-            _tree = new BTree<TestElement>(_order);
+            //_tree = new BTree<TestElement>(_order);
         }
     }
 }

@@ -8,7 +8,7 @@ using NTree.Common;
 
 namespace NTree.BTree
 {
-    public class BTree<T> : ITree<T> where T : IComparable
+    internal class BTree<T> : ITree<T> where T : IComparable
     {
         private BTreeNode<T> _root;
         private int _count;
