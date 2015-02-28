@@ -192,13 +192,14 @@ namespace NTree.Test
             _tree.Add(new TestElement(100));
 
             _tree.Remove(new TestElement(4));
+            _tree.Remove(new TestElement(1));
             Assert.IsFalse(_tree.Contains(new TestElement(4)));
             Assert.IsTrue(_tree.Contains(new TestElement(2)));
-            Assert.IsTrue(_tree.Contains(new TestElement(1)));
+            Assert.IsFalse(_tree.Contains(new TestElement(1)));
             Assert.IsTrue(_tree.Contains(new TestElement(7)));
             Assert.IsTrue(_tree.Contains(new TestElement(8)));
             Assert.IsTrue(_tree.Contains(new TestElement(100)));
-            Assert.AreEqual(7, _tree.Count);
+            Assert.AreEqual(6, _tree.Count);
         }
 
         /*

@@ -46,7 +46,6 @@ namespace NTree.BinaryTree.RBTree
 
         private void RBDelete(RBNode<T> node)
         {
-            throw new NotImplementedException();
             RBNode<T> currentNode;
             if (node.Left == null || node.Right == null)
             {
@@ -65,6 +64,11 @@ namespace NTree.BinaryTree.RBTree
             {
                 tmp = (RBNode<T>) currentNode.Right;
             }
+            if (tmp != null)
+            {
+                tmp.Parent = currentNode.Parent;
+            }
+
             RBNode<T> tmpParent = (RBNode<T>) currentNode.Parent;
             bool left = false;
             if (currentNode.Parent == null)
@@ -79,6 +83,7 @@ namespace NTree.BinaryTree.RBTree
             else
             {
                 currentNode.Parent.Right = tmp;
+                left = false;
             }
 
             if (!ReferenceEquals(currentNode, node))
@@ -90,6 +95,7 @@ namespace NTree.BinaryTree.RBTree
             {
                 RBDeleteFixUp(tmp, tmpParent, left);
             }
+            _count--;
         }
 
         private void RBDeleteFixUp(RBNode<T> node, RBNode<T> parent, bool left)
@@ -105,7 +111,7 @@ namespace NTree.BinaryTree.RBTree
                         tmp.Colour = Colour.Black;
                         parent.Colour = Colour.Red;
                         RotateLeft(parent);
-                        tmp = (RBNode<T>) parent.Left;
+                        tmp = (RBNode<T>) parent.Right;
                     }
 
                     if (IsBlack(tmp.Left) && IsBlack(tmp.Right))
@@ -113,7 +119,7 @@ namespace NTree.BinaryTree.RBTree
                         tmp.Colour = Colour.Red;
                         node = parent;
                         parent = (RBNode<T>) node.Parent;
-                        left = ReferenceEquals(node, parent.Left);
+                        left = ReferenceEquals(node, parent == null ? null : parent.Left);
                     }
                     else
                     {
@@ -138,9 +144,49 @@ namespace NTree.BinaryTree.RBTree
                 }
                 else
                 {
-                    
+                    tmp = (RBNode<T>) parent.Left;
+                    if (IsRed(tmp))
+                    {
+                        tmp.Colour = Colour.Black;
+                        parent.Colour = Colour.Red;
+                        RotateRight(parent);
+                        tmp = (RBNode<T>) parent.Left;
+                    }
+
+                    if (IsBlack(tmp.Right) && IsBlack(tmp.Left))
+                    {
+                        tmp.Colour = Colour.Red;
+                        node = parent;
+                        parent = (RBNode<T>) node.Parent;
+                        left = (ReferenceEquals(node, parent == null ? null : parent.Left));
+                    }
+                    else
+                    {
+                        if (IsBlack(tmp.Left))
+                        {
+                            ((RBNode<T>) tmp.Right).Colour = Colour.Black;
+                            tmp.Colour = Colour.Red;
+                            RotateLeft(tmp);
+                            tmp = (RBNode<T>) parent.Left;
+                        }
+
+                        tmp.Colour = parent.Colour;
+                        parent.Colour = Colour.Black;
+                        if (tmp.Left != null)
+                        {
+                            ((RBNode<T>)tmp.Left).Colour = Colour.Black;
+                        }
+                        RotateRight(parent);
+                        node = (RBNode<T>) Root;
+                        parent = null;
+                    }
                 }
             }
+            if (node != null)
+            {
+                node.Colour = Colour.Black;
+            }
+            
         }
 
 
@@ -370,7 +416,7 @@ namespace NTree.BinaryTree.RBTree
         {
             if (node == null)
             {
-                return false;
+                return true;
             }
             RBNode<T> tmp = (RBNode<T>) node;
             return tmp.Colour == Colour.Black;
