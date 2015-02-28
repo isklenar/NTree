@@ -432,5 +432,21 @@ namespace NTree.Test
             CollectionAssert.AreEqual(shouldContain, _tree);
 
         }
+
+        [Test]
+        public void ReadOnlyTest()
+        {
+            Assert.IsFalse(_tree.IsReadOnly);
+        }
+
+        [Test]
+        public void ClearTreeTest()
+        {
+            _tree.Add(new TestElement(1));
+            Assert.AreEqual(1, _tree.Count);
+            _tree.Clear();
+            Assert.AreEqual(0, _tree.Count);
+            Assert.IsFalse(_tree.Contains(new TestElement(1)));
+        }
     }
 }

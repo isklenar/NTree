@@ -30,7 +30,7 @@ namespace NTree.BinaryTree.RBTree
             }
 
             RBDelete(node);
-
+            _count--;
             return true;
         }
 
@@ -95,9 +95,18 @@ namespace NTree.BinaryTree.RBTree
             {
                 RBDeleteFixUp(tmp, tmpParent, left);
             }
-            _count--;
         }
 
+        /// <summary>
+        /// Fixes tree after deleting node.
+        /// 
+        /// Thanks to Trog from stackoverflow for this algorithm.
+        /// 
+        /// Original found at: http://stackoverflow.com/questions/6723488/red-black-tree-deletion-algorithm
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="parent"></param>
+        /// <param name="left"></param>
         private void RBDeleteFixUp(RBNode<T> node, RBNode<T> parent, bool left)
         {
             while (!ReferenceEquals(node, Root) && IsBlack(node))
@@ -358,23 +367,6 @@ namespace NTree.BinaryTree.RBTree
                 }
             }
         }
-
-        private RBNode<T> Sibling(RBNode<T> node)
-        {
-            if (node.Parent == null)
-            {
-                return null;
-            }
-
-            if (ReferenceEquals(node.Parent.Left, node))
-            {
-                return (RBNode<T>) node.Parent.Right;
-            }
-            else
-            {
-                return (RBNode<T>) node.Parent.Left;
-            }
-        } 
 
         private RBNode<T> Grandparent(RBNode<T> node)
         {

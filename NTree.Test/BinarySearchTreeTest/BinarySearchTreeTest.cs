@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace NTree.Test.BinarySearchTreeTest
 {
     [TestFixture]
-    public class SearchTreeTest : TreeTestBase
+    public class BinarySearchTreeTest : TreeTestBase
     {
         [SetUp]
         public void Initialize()

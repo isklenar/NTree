@@ -88,4 +88,76 @@ namespace NTree.BTree
             return GetEnumerator();
         }
     }
+
+    public class BTree<K, V> : ITree<K, V> where K : IComparable
+    {
+        private BTree<KeyValueNode<K, V>> _tree;
+        private int _order;
+
+        public BTree(int order)
+        {
+            _order = order;
+            _tree = new BTree<KeyValueNode<K, V>>(_order);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void Add(K key, V value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(K key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(V[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(K key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Count
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool IsReadOnly
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public V GetValue(K key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ReadOnlyTree<K, V> AsReadOnly()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ConcurrentTree<K, V> AsConcurrentTree()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator<V> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
