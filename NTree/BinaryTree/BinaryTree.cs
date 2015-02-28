@@ -6,7 +6,7 @@ using NTree.Common;
 
 namespace NTree.BinaryTree
 {
-    public abstract class BinaryTree<T> : Tree<T> where T : IComparable
+    public abstract class BinaryTree<T> : ITree<T> where T : IComparable
     {
         protected int _count;
         protected bool ReadOnly;
@@ -71,15 +71,18 @@ namespace NTree.BinaryTree
         /// Returns in-order enumerator.
         /// </summary>
         /// <returns>in order IEnumerator</returns>
-        public override IEnumerator<T> GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
             return new BSTInOrderEnumerator<T>(Root);
         }
+
+        public abstract void Add(T item);
+
         /// <summary>
         /// Clears tree of all data. 
         /// </summary>
         /// <exception cref="NotSupportedException">Throws NotSupportedException if tree is read-only.</exception>
-        public override void Clear()
+        public void Clear()
         {
             if (ReadOnly)
             {
@@ -93,7 +96,7 @@ namespace NTree.BinaryTree
         /// </summary>
         /// <param name="item">element to find</param>
         /// <returns>true if found, false if not</returns>
-        public override bool Contains(T item)
+        public bool Contains(T item)
         {
             return FindElement(item) != null;
         }
@@ -103,7 +106,7 @@ namespace NTree.BinaryTree
         /// </summary>
         /// <param name="array">array to copy to</param>
         /// <param name="arrayIndex">starting index of array</param>
-        public override void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(T[] array, int arrayIndex)
         {
             int currentIndex = arrayIndex;
             foreach (var element in this)
@@ -112,18 +115,24 @@ namespace NTree.BinaryTree
             }
         }
 
+        public abstract bool Remove(T item);
+
         /// <summary>
         /// Returns number of elements in tree.
         /// </summary>
-        public override int Count
+        public int Count
         {
             get { return _count; }
         }
 
-        public override  bool IsReadOnly
+        public bool IsReadOnly
         {
             get { return ReadOnly; }
         }
+
+        public abstract ReadOnlyTree<T> AsReadOnly();
+
+        public abstract ConcurrentTree<T> AsConcurrentTree();
 
         /// <summary>
         /// Removes node from tree and returns it.
@@ -300,13 +309,18 @@ namespace NTree.BinaryTree
         {
             return FindElement(item).Element;
         }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 
-    public abstract class BinaryTree<K, V> : Tree<K, V>, IEnumerable where K : IComparable
+    public abstract class BinaryTree<K, V> : ITree<K, V>, IEnumerable where K : IComparable
     {
         protected BinaryTree<KeyValueNode<K, V>> _tree;
 
-        public override IEnumerator<V> GetEnumerator()
+        public IEnumerator<V> GetEnumerator()
         {
             KeyValueNode<K, V>[] items = new KeyValueNode<K, V>[_tree.Count];
             _tree.CopyTo(items, 0);
@@ -319,31 +333,35 @@ namespace NTree.BinaryTree
             return GetEnumerator();
         }
 
-        public override void Add(K key, V value)
+        public void Add(K key, V value)
         {
             var item = new KeyValueNode<K, V>(key, value);
             _tree.Add(item);
         }
 
-        public override void Clear()
+        public void Clear()
         {
             _tree.Clear();
         }
 
-        public override bool Contains(K key)
+        public bool Contains(K key)
         {
             var item = new KeyValueNode<K, V>(key, default(V));
             return _tree.Contains(item);
         }
 
-        public override V GetValue(K key)
+        public V GetValue(K key)
         {
             KeyValueNode<K, V> item = new KeyValueNode<K, V>(key, default(V));
             var ret = _tree.GetItem(item) as KeyValueNode<K, V>;
             return ret.Value;
         }
 
-        public override void CopyTo(V[] array, int arrayIndex)
+        public abstract ReadOnlyTree<K, V> AsReadOnly();
+
+        public abstract ConcurrentTree<K, V> AsConcurrentTree();
+
+        public void CopyTo(V[] array, int arrayIndex)
         {
             KeyValueNode<K, V>[] items = new KeyValueNode<K, V>[_tree.Count];
             _tree.CopyTo(items, 0);
@@ -355,13 +373,13 @@ namespace NTree.BinaryTree
             }
         }
 
-        public override bool Remove(K key)
+        public bool Remove(K key)
         {
             var item = new KeyValueNode<K, V>(key, default(V));
             return _tree.Remove(item);
         }
 
-        public override int Count { get { return _tree.Count; } }
-        public override bool IsReadOnly { get { return _tree.IsReadOnly; } }
+        public int Count { get { return _tree.Count; } }
+        public bool IsReadOnly { get { return _tree.IsReadOnly; } }
     }
 }

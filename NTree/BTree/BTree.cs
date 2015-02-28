@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using NTree.Common;
 
 namespace NTree.BTree
 {
-    public class BTree<T> : Tree<T> where T : IComparable
+    public class BTree<T> : ITree<T> where T : IComparable
     {
         private BTreeNode<T> _root;
         private int _count;
@@ -31,45 +32,60 @@ namespace NTree.BTree
             
         }
 
-        public override IEnumerator<T> GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
             throw new NotImplementedException();
         }
 
-        public override void Add(T item)
+        public void Add(T item)
         {
             throw new NotImplementedException();
         }
 
-        public override void Clear()
+        public void Clear()
         {
             _root = null;
             _count = 0;
         }
 
-        public override bool Contains(T item)
+        public bool Contains(T item)
         {
             throw new NotImplementedException();
         }
 
-        public override void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(T[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
 
-        public override bool Remove(T item)
+        public bool Remove(T item)
         {
             throw new NotImplementedException();
         }
 
-        public override int Count
+        public int Count
         {
             get { return _count; }
         }
 
-        public override bool IsReadOnly
+        public bool IsReadOnly
         {
             get { return _readOnly; }
+        }
+
+        public ReadOnlyTree<T> AsReadOnly()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ConcurrentTree<T> AsConcurrentTree()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

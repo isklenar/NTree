@@ -7,7 +7,7 @@ namespace NTree.Test.BinarySearchTreeTest.KeyValueTrees
 {
     public abstract class KeyValueTreesTestBase
     {
-        protected Tree<int, TestElement> _tree;
+        protected ITree<int, TestElement> _tree;
 
         [Test]
         public void InsertAndRetrieve([Range(0, 100000, 20000)] int n)
@@ -47,12 +47,50 @@ namespace NTree.Test.BinarySearchTreeTest.KeyValueTrees
             int[] distinctKeys = keys.OrderBy(u => random.Next()).Distinct().ToArray();
             int[] half = distinctKeys.Take(distinctKeys.Length/2).ToArray();
             int[] remaining = distinctKeys.Except(half).ToArray();
+
             foreach (var i in half)
             {
                 _tree.Remove(i);
             }
 
             Assert.IsTrue(remaining.Count() == _tree.Count);
+
+            foreach (var i in remaining)
+            {
+                Assert.IsTrue(_tree.Contains(i));
+                Assert.IsTrue(_tree.GetValue(i).Id == i + 10);
+            }
+        }
+
+        [Test]
+        public void InsertRemoveThenAdd([Range(0, 100000, 20000)] int n)
+        {
+            int[] keys = new int[n];
+            TestElement[] values = new TestElement[n];
+            Random random = new Random();
+            for (int i = 0; i < n; i++)
+            {
+                keys[i] = random.Next();
+                values[i] = new TestElement(keys[i] + 10);
+                _tree.Add(keys[i], values[i]);
+            }
+            int[] distinctKeys = keys.OrderBy(u => random.Next()).Distinct().ToArray();
+            int[] half = distinctKeys.Take(distinctKeys.Length / 2).ToArray();
+            int[] remaining = distinctKeys.Except(half).ToArray();
+
+            foreach (var i in half)
+            {
+                _tree.Remove(i);
+            }
+
+            Assert.IsTrue(remaining.Count() == _tree.Count);
+
+            int [] newlyAdded = new int[n/2];
+            for (int i = n; i < n + n/2; i++)
+            {
+                newlyAdded[i] = random.Next();
+
+            }
 
             foreach (var i in remaining)
             {

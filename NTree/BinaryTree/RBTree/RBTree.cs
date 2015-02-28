@@ -34,8 +34,19 @@ namespace NTree.BinaryTree.RBTree
             return true;
         }
 
+        public override ReadOnlyTree<T> AsReadOnly()
+        {
+            return new ReadOnlyTree<T>(this);
+        }
+
+        public override ConcurrentTree<T> AsConcurrentTree()
+        {
+            return new ConcurrentTree<T>(this);
+        }
+
         private void RBDelete(RBNode<T> node)
         {
+            throw new NotImplementedException();
             RBNode<T> currentNode;
             if (node.Left == null || node.Right == null)
             {
@@ -371,6 +382,16 @@ namespace NTree.BinaryTree.RBTree
         public RBTree()
         {
             _tree = new RBTree<KeyValueNode<K, V>>();
+        }
+
+        public override ReadOnlyTree<K, V> AsReadOnly()
+        {
+            return new ReadOnlyTree<K, V>(this);
+        }
+
+        public override ConcurrentTree<K, V> AsConcurrentTree()
+        {
+            return new ConcurrentTree<K, V>(this);
         }
     }
 }

@@ -26,13 +26,33 @@ namespace NTree.BinaryTree.BinarySearchTree
             }
             return false;         
         }
+
+        public override ReadOnlyTree<T> AsReadOnly()
+        {
+            return new ReadOnlyTree<T>(this);
+        }
+
+        public override ConcurrentTree<T> AsConcurrentTree()
+        {
+            return new ConcurrentTree<T>(this);
+        }
     }
 
-    public class BinarySearchTree<K, V> : BinaryTree<K, V>, IEnumerable where K : IComparable
+    public class BinarySearchTree<K, V> : BinaryTree<K, V> where K : IComparable
     {
         public BinarySearchTree()
         {
             _tree = new BinarySearchTree<KeyValueNode<K, V>>();
-        }        
+        }
+
+        public override ReadOnlyTree<K, V> AsReadOnly()
+        {
+            return new ReadOnlyTree<K, V>(this);
+        }
+
+        public override ConcurrentTree<K, V> AsConcurrentTree()
+        {
+            return new ConcurrentTree<K, V>(this);
+        }
     }
 }

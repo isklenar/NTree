@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NTree.Common;
 using NUnit.Framework;
 
 namespace NTree.Test
 {
     public abstract class TreeTestBase{
 
-        protected ICollection<TestElement> _tree;
+        protected ITree<TestElement> _tree;
 
         [Test]
         public void InsertAndContainsTest1Element()

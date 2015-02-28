@@ -27,7 +27,7 @@ namespace NTree.Test.BinarySearchTreeTest.ConcurrentTree
         public void InsertAndContainsThreaded([Range(0, 10000, 2000)] int n, [Range(2,34,8)] int threads)
         {
             Task [] tasks = new Task[threads];
-            for (int i = 0; i < threads/2; i++)
+            for (int i = 0; i < threads/2; i++) //create write threads
             {
                 var i1 = i;
                 tasks[i] = Task.Run(() =>
@@ -37,7 +37,7 @@ namespace NTree.Test.BinarySearchTreeTest.ConcurrentTree
             }
 
 
-            for (int i = threads / 2; i < threads; i++)
+            for (int i = threads / 2; i < threads; i++) //contains threads
             {
                 var i1 = i;
                 tasks[i] = Task.Run(() =>
