@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace NTree.BinaryTree
 {
-    class BSTInOrderEnumerator<T> : IEnumerator<T> where T : IComparable
+    public class BSTInOrderEnumerator<T> : IEnumerator<T> where T : IComparable
     {
         private BTNode<T> _root;
         private BTNode<T> _current;
 
         private bool _first = true;
 
-        public BSTInOrderEnumerator(BTNode<T> root)
+        internal BSTInOrderEnumerator(BTNode<T> root)
         {
             _root = root;
             _current = _root;

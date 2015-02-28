@@ -83,30 +83,12 @@ namespace NTree.Test
                 Assert.IsTrue(_tree.Contains(item));
             }
 
+            foreach (var testElement in _tree)
+            {
+                testElement.Id = 100;
+            }
+
         }
-
-       /* [Test]
-        public void ClearTreeTest()
-        {
-            int n = 100;
-            Random random = new Random();
-            int[] numbers = new int[n];
-
-            for (int i = 0; i < n; i++)
-            {
-                numbers[i] = random.Next();
-            }
-
-            for (int i = 0; i < n; i++)
-            {
-                _tree.Add(new TestElement(numbers[i]));
-            }
-
-            Assert.AreEqual(n, _tree.Count);
-            _tree.Clear();
-            Assert.AreEqual(0, _tree.Count);
-            Assert.IsFalse(_tree.Contains(new TestElement(1)));
-        }*/
 
         [Test]
         public void InsertAndRemoveLargeScale()

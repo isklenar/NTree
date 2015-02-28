@@ -10,6 +10,7 @@ namespace NTree.Test.BinarySearchTreeTest.KeyValueTrees
         public void Initialize()
         {
             _tree = new BinarySearchTree<int, TestElement>();
+           
         }
     }
 }

@@ -44,6 +44,10 @@ namespace NTree.BinaryTree.RBTree
             return new ConcurrentTree<T>(this);
         }
 
+        /// <summary>
+        /// Deletes node from RB tree
+        /// </summary>
+        /// <param name="node"></param>
         private void RBDelete(RBNode<T> node)
         {
             RBNode<T> currentNode;

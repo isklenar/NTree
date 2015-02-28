@@ -51,7 +51,7 @@
     <Compile Include="Common\ConcurrentTree.cs" />
     <Compile Include="Common\KeyValueNode.cs" />
     <Compile Include="Common\ReadOnlyTree.cs" />
-    <Compile Include="Common\Tree.cs" />
+    <Compile Include="Common\ITree.cs" />
     <Compile Include="NTree.cs" />
     <Compile Include="PriorityQueue\PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

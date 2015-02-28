@@ -111,7 +111,7 @@ namespace NTree.Common
             {
                 return _tree.GetEnumerator();
             }
-
+            
         }
 
         public void Add(K key, V value)
