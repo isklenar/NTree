@@ -83,11 +83,6 @@ namespace NTree.Test
                 Assert.IsTrue(_tree.Contains(item));
             }
 
-            foreach (var testElement in _tree)
-            {
-                testElement.Id = 100;
-            }
-
         }
 
         [Test]

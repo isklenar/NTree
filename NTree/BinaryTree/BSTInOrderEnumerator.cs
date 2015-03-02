@@ -16,7 +16,7 @@ namespace NTree.BinaryTree
             _root = root;
             _current = _root;
 
-            while (_current.Left != null)
+            while (_current != null &&_current.Left != null)
             {
                 _current = _current.Left;
             }
@@ -32,7 +32,7 @@ namespace NTree.BinaryTree
             if (_first)
             {
                 _first = false;
-                return true;
+                return _current != null;
             }
 
             if (_current == null)
