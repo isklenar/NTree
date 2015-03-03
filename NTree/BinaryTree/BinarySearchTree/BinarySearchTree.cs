@@ -21,10 +21,7 @@
 // SOFTWARE.
 
 
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using NTree.Common;
 
 namespace NTree.BinaryTree.BinarySearchTree
@@ -58,6 +55,128 @@ namespace NTree.BinaryTree.BinarySearchTree
         public override ConcurrentTree<T> AsConcurrentTree()
         {
             return new ConcurrentTree<T>(this);
+        }
+
+        /// <summary>
+        /// Removes node from tree and returns it.
+        /// </summary>
+        /// <param name="node">element to remove</param>
+        /// <returns>Removed node detached from tree, null if not found</returns>
+        private BTNode<T> RemoveNode(BTNode<T> node)
+        {
+            if (node == null)
+            {
+                //not found, can't remove
+                return null;
+            }
+            //does not have children
+            if (node.Left == null && node.Right == null)
+            {
+                RemoveChildlessNode(node);
+            }
+            else if (node.Left == null ^ node.Right == null) // has one child
+            {
+                RemoveOneChildNode(node);
+            }
+            else //has both children
+            {
+                RemoveTwoChildrenNode(node);
+            }
+
+            return node;
+        }
+
+        /// <summary>
+        /// Removes a node that has no children
+        /// </summary>
+        /// <param name="node">node to remove</param>
+        private void RemoveChildlessNode(BTNode<T> node)
+        {
+            var parent = node.Parent;
+
+            //we're removing root
+            if (parent == null)
+            {
+                Root = null;
+                return;
+            }
+
+            //removing left child
+            if (parent.Left != null && parent.Left.Element.CompareTo(node.Element) == 0)
+            {
+                parent.Left = null;
+            }
+            else //it's a right child
+            {
+                parent.Right = null;
+            }
+        }
+        /// <summary>
+        /// Removes a node with one child
+        /// </summary>
+        /// <param name="node">node to remove</param>
+        private void RemoveOneChildNode(BTNode<T> node)
+        {
+            var child = node.Left;
+            if (child != null) //only child is left one
+            {
+                var parent = node.Parent;
+
+                //root
+                if (parent == null)
+                {
+                    child.Parent = null;
+                    Root = child;
+                    return;
+                }
+
+                if (ReferenceEquals(parent.Left, node)) //node is left child of parent
+                {
+                    parent.Left = child;
+                    child.Parent = parent;
+                }
+                else
+                {
+                    parent.Right = child;
+                    child.Parent = parent;
+                }
+            }
+            else
+            {
+                child = node.Right;
+                var parent = node.Parent;
+                //root
+                if (parent == null)
+                {
+                    child.Parent = null;
+                    Root = child;
+                    return;
+                }
+
+                if (ReferenceEquals(parent.Left, node)) //node is left child of parent
+                {
+                    parent.Left = child;
+                    child.Parent = parent;
+                }
+                else
+                {
+                    parent.Right = child;
+                    child.Parent = parent;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes node with two children.
+        /// Detaches it from tree and replaces it with in-order successor.
+        /// </summary>
+        /// <param name="node">node to remove</param>
+        private void RemoveTwoChildrenNode(BTNode<T> node)
+        {
+            //find min node in right subtree, which will be replacement for current one
+            var replacement = FindMinInSubtree(node.Right);
+            node.Element = replacement.Element;
+            RemoveNode(replacement);
         }
     }
 

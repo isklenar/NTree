@@ -64,7 +64,7 @@ namespace NTree.Common
             _tree = tree;
         }
 
-        public IEnumerator<V> GetEnumerator()
+        public IEnumerator GetEnumerator()
         {
             return _tree.GetEnumerator();
         }

@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 
 // Copyright (c) 2015 Ivo Sklenar
 
@@ -21,13 +21,7 @@
 // SOFTWARE.
 
 
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+using System;
 using NTree.Common;
 
 namespace NTree.BinaryTree.RBTree

@@ -46,8 +46,6 @@ namespace NTree.Common
 
     public interface ITree<K, V> : IEnumerable where K : IComparable
     {
-        IEnumerator<V> GetEnumerator();
-
         /// <summary>
         /// Adds item to the tree.
         /// 
