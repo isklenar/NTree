@@ -119,5 +119,18 @@ namespace NTree.Test
                 Assert.IsTrue(_tree.GetValue(key).Id == key + 10);
             }
         }
+
+        [Test]
+        public void ClearTreeTest()
+        {
+            _tree.Add(1, new TestElement(1));
+            Assert.AreEqual(1, _tree.Count);
+            Assert.IsTrue(_tree.Contains(1));
+
+            _tree.Clear();
+
+            Assert.AreEqual(0, _tree.Count);
+            Assert.IsFalse(_tree.Contains(1));
+        }
     }
 }

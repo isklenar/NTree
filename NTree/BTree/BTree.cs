@@ -35,7 +35,6 @@ namespace NTree.BTree
     {
         private BTreeNode<T> _root;
         private int _count;
-        private bool _readOnly;
 
         private int _order;
 
@@ -93,7 +92,8 @@ namespace NTree.BTree
 
         public bool IsReadOnly
         {
-            get { return _readOnly; }
+            // this tree is never read only - use AsReadOnly(this)
+            get { return false; }
         }
 
         public ReadOnlyTree<T> AsReadOnly()

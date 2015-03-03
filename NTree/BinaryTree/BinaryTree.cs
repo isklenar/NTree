@@ -96,7 +96,11 @@ namespace NTree.BinaryTree
         /// <returns>in order IEnumerator</returns>
         public IEnumerator<T> GetEnumerator()
         {
-            return new BSTInOrderEnumerator<T>(Root);
+            T [] values = new T[_count];
+            CopyTo(values, 0);
+
+            // enumerator is moment in time
+            return values.ToList().GetEnumerator();
         }
 
         public abstract void Add(T item);
