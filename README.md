@@ -3,8 +3,8 @@ C# library that provides implementation of several tree data structures.
 
 Currently implemented structures:
 * Unbalanced binary search tree
-* Balanced binary search tree (Red-Black tree) (WIP)
-* Priority queue (min-heap)
+* Balanced binary search tree (Red-Black tree)
+* Priority queue (min binary heap)
 * B-Tree (WIP)
 
 ## Usage
