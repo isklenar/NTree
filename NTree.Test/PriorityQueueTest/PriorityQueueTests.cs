@@ -22,14 +22,11 @@
 
 
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
-using NTree.PriorityQueue;
+using NTrees.PriorityQueue;
 
-namespace NTree.Test.PriorityQueueTest
+namespace NTrees.Test.PriorityQueueTest
 {
     [TestFixture]
     class KeyValuePriorityQueueTests

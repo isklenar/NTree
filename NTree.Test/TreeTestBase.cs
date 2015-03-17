@@ -24,10 +24,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NTree.Common;
+using NTrees.Common;
 using NUnit.Framework;
 
-namespace NTree.Test
+namespace NTrees.Test
 {
     public abstract class TreeTestBase{
 
@@ -401,6 +401,7 @@ namespace NTree.Test
                 Assert.IsTrue(_tree.Contains(numbers[i]));
             }
         }
+
         [Test]
         public void RemoveThenAddTest([Range(40000, 200000, 40000)] int n)
         {

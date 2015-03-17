@@ -23,7 +23,7 @@
 
 ﻿using System;
 
-namespace NTree.Test
+namespace NTrees.Test
 {
     public class TestElement : IComparable
     {

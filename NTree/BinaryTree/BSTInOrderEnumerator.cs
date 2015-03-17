@@ -25,7 +25,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace NTree.BinaryTree
+namespace NTrees.BinaryTree
 {
     public class BSTInOrderEnumerator<T> : IEnumerator<T> where T : IComparable
     {

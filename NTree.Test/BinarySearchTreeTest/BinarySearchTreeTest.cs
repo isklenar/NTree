@@ -21,10 +21,10 @@
 // SOFTWARE.
 
 
-﻿using NTree.BinaryTree.BinarySearchTree;
+﻿using NTrees.BinaryTree.BinarySearchTree;
 using NUnit.Framework;
 
-namespace NTree.Test.BinarySearchTreeTest
+namespace NTrees.Test.BinarySearchTreeTest
 {
     [TestFixture]
     public class BinarySearchTreeTest : TreeTestBase

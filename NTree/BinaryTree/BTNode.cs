@@ -22,10 +22,8 @@
 
 
 ﻿using System;
-using System.ComponentModel;
-using NTree.Common;
 
-namespace NTree.BinaryTree
+namespace NTrees.BinaryTree
 {
     /// <summary>
     /// Node in binary tree.

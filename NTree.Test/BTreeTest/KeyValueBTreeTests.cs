@@ -21,17 +21,11 @@
 // SOFTWARE.
 
 
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NTree.BinaryTree.BinarySearchTree;
-using NTree.BTree;
-using NTree.Test.BinarySearchTreeTest.KeyValueTrees;
+
+using NTrees.BTree;
 using NUnit.Framework;
 
-namespace NTree.Test.BTreeTest
+namespace NTrees.Test.BTreeTest
 {
     [TestFixture(3)]
     [TestFixture(10)]

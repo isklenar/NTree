@@ -22,12 +22,8 @@
 
 
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NTree.BTree
+namespace NTrees.BTree
 {
     internal class BTreeNode<T> where T : IComparable
     {

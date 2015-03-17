@@ -29,7 +29,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NTree.Common
+namespace NTrees.Common
 {
     public class ConcurrentTree<T> : ITree<T> where T : IComparable
     {

@@ -23,10 +23,10 @@
 
 ﻿using System;
 using System.Linq;
-using NTree.Common;
+using NTrees.Common;
 using NUnit.Framework;
 
-namespace NTree.Test
+namespace NTrees.Test
 {
     public abstract class KeyValueTreesTestBase
     {

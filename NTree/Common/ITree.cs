@@ -25,7 +25,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace NTree.Common
+namespace NTrees.Common
 {
     public interface ITree<T> : ICollection<T> where T : IComparable
     {

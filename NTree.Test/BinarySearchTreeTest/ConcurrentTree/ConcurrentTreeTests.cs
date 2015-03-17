@@ -24,11 +24,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using NTree.BinaryTree.RBTree;
-using NTree.Common;
+using NTrees.BinaryTree.RBTree;
+using NTrees.Common;
 using NUnit.Framework;
 
-namespace NTree.Test.BinarySearchTreeTest.ConcurrentTree
+namespace NTrees.Test.BinarySearchTreeTest.ConcurrentTree
 {
     [TestFixture]
     public class ConcurrentTreeTests

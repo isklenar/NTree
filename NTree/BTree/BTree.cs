@@ -24,12 +24,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NTree.Common;
+﻿using NTrees.Common;
 
-namespace NTree.BTree
+namespace NTrees.BTree
 {
     internal class BTree<T> : ITree<T> where T : IComparable
     {

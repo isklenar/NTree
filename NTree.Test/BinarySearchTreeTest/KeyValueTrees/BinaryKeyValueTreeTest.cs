@@ -21,10 +21,10 @@
 // SOFTWARE.
 
 
-﻿using NTree.BinaryTree.BinarySearchTree;
+﻿using NTrees.BinaryTree.BinarySearchTree;
 using NUnit.Framework;
 
-namespace NTree.Test.BinarySearchTreeTest.KeyValueTrees
+namespace NTrees.Test.BinarySearchTreeTest.KeyValueTrees
 {
     [TestFixture]
     public class BinaryKeyValueTreeTest : KeyValueTreesTestBase

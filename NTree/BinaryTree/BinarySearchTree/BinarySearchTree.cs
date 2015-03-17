@@ -22,9 +22,9 @@
 
 
 using System;
-using NTree.Common;
+using NTrees.Common;
 
-namespace NTree.BinaryTree.BinarySearchTree
+namespace NTrees.BinaryTree.BinarySearchTree
 {
     public class BinarySearchTree<T> : BinaryTree<T> where T : IComparable
     {

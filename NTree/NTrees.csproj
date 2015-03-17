@@ -7,8 +7,8 @@
     <ProjectGuid>{B8891DB6-8B10-4684-98C5-697BFBD81EA0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NTree</RootNamespace>
-    <AssemblyName>NTree</AssemblyName>
+    <RootNamespace>NTrees</RootNamespace>
+    <AssemblyName>NTrees</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryTree\AVLTree\AVLTree.cs" />
     <Compile Include="BinaryTree\BinarySearchTree\BinarySearchTree.cs" />
     <Compile Include="BinaryTree\BSTInOrderEnumerator.cs" />
     <Compile Include="BinaryTree\BinaryTree.cs" />
@@ -52,7 +51,6 @@
     <Compile Include="Common\KeyValueNode.cs" />
     <Compile Include="Common\ReadOnlyTree.cs" />
     <Compile Include="Common\ITree.cs" />
-    <Compile Include="NTree.cs" />
     <Compile Include="PriorityQueue\PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -6,8 +6,8 @@
     <ProjectGuid>{7ABAE572-38D3-4E0D-853D-4D2AB34157E5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NTree.Test</RootNamespace>
-    <AssemblyName>NTreeTests</AssemblyName>
+    <RootNamespace>NTrees.Test</RootNamespace>
+    <AssemblyName>NTreesTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -53,7 +53,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BinarySearchTreeTest\AVLTreeTest.cs" />
     <Compile Include="BinarySearchTreeTest\BinarySearchTreeTest.cs" />
     <Compile Include="BTreeTest\BTreeTests.cs" />
     <Compile Include="BTreeTest\KeyValueBTreeTests.cs" />
@@ -68,9 +67,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NTree\NTree.csproj">
+    <ProjectReference Include="..\NTree\NTrees.csproj">
       <Project>{b8891db6-8b10-4684-98c5-697bfbd81ea0}</Project>
-      <Name>NTree</Name>
+      <Name>NTrees</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -22,10 +22,9 @@
 
 
 ﻿using System;
-using System.Collections.Generic;
-using NTree.Common;
+﻿using NTrees.Common;
 
-namespace NTree.PriorityQueue
+namespace NTrees.PriorityQueue
 {
     /// <summary>
     /// PriorityQueue implemented as min binary heap, meaning that the smallest element is at the top.

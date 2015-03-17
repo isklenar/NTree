@@ -27,7 +27,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NTree.BinaryTree.RBTree
+namespace NTrees.BinaryTree.RBTree
 {
     public class RBNode<T> : BTNode<T> where T : IComparable
     {

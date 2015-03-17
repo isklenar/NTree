@@ -25,9 +25,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using NTree.Common;
+﻿using NTrees.Common;
 
-namespace NTree.BinaryTree
+namespace NTrees.BinaryTree
 {
     public abstract class BinaryTree<T> : ITree<T> where T : IComparable
     {
