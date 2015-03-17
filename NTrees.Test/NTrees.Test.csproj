@@ -67,7 +67,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NTree\NTrees.csproj">
+    <ProjectReference Include="..\NTrees\NTrees.csproj">
       <Project>{b8891db6-8b10-4684-98c5-697bfbd81ea0}</Project>
       <Name>NTrees</Name>
     </ProjectReference>
