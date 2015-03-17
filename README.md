@@ -1,4 +1,4 @@
-# NTree
+# NTrees
 C# library that provides implementation of several tree data structures.
 
 Currently implemented structures:
@@ -8,7 +8,7 @@ Currently implemented structures:
 * B-Tree (WIP)
 
 ## Usage
-Documented on wiki: [Usage](https://github.com/isklenar/NTree/wiki/Usage)
+Documented on wiki: [Usage](https://github.com/isklenar/NTrees/wiki/Usage)
 
 ## Contributing
 You are free to submit pull requests. If you want to contribute more than just by pull requests, send me message and we can work something out.
